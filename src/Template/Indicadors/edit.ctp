@@ -40,11 +40,14 @@ $this->end();
     <legend><?= __('Editar {0}', ['Indicador']) ?></legend>
     <?php
     echo $this->Form->input('nombre');
-    echo $this->Form->input('link'); 
-    echo $this->Form->input('Grupo'); 
-    
-    
+    echo $this->Form->input('link');
+    echo $this->Form->input('Grupo');
     ?>
+    <div class="checkbox">
+        <label>
+        <?= $this->Form->checkbox('activo'); ?> Activo
+        </label>
+    </div>
 </fieldset>
 <?= $this->Form->button(__("Grabar")); ?>
 <?= $this->Form->end() ?>

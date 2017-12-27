@@ -44,6 +44,11 @@ $this->end();
     echo $this->Form->input('email', ['type' => 'email']);
     echo $this->Form->input('rol_id', ['options' => $rols]);
     ?>
+    <div class="checkbox">
+        <label>
+        <?= $this->Form->checkbox('activo'); ?> Activo
+        </label>
+    </div>
 </fieldset>
 <?= $this->Form->button(__("Save")); ?>
 <?= $this->Form->end() ?>

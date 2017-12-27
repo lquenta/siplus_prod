@@ -18,7 +18,7 @@ class MecanismosController extends AppController
      */
     public function index()
     {
-        $mecanismos = $this->paginate($this->Mecanismos);
+        $mecanismos = $this->paginate($this->Mecanismos); // debug($mecanismos); die();
 
         $this->set(compact('mecanismos'));
         $this->set('_serialize', ['mecanismos']);
@@ -50,7 +50,7 @@ class MecanismosController extends AppController
     {
         $mecanismo = $this->Mecanismos->newEntity();
         if ($this->request->is('post')) {
-            $mecanismo = $this->Mecanismos->patchEntity($mecanismo, $this->request->data);
+            $mecanismo = $this->Mecanismos->patchEntity($mecanismo, $this->request->data); // debug($mecanismo->activo); die();
             if ($this->Mecanismos->save($mecanismo)) {
                 $this->Flash->success(__('El nuevo Mecanismo de Proteccion fue grabado.'));
                 return $this->redirect(['action' => 'index']);
@@ -73,9 +73,10 @@ class MecanismosController extends AppController
     {
         $mecanismo = $this->Mecanismos->get($id, [
             'contain' => []
-        ]);
+        ]); // debug($mecanismo); die();
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $mecanismo = $this->Mecanismos->patchEntity($mecanismo, $this->request->data);
+            $mecanismo = $this->Mecanismos->patchEntity($mecanismo, $this->request->data); // debug($mecanismo->activo); die();
+            $mecanismo->activo = ($mecanismo->activo == 1);
             if ($this->Mecanismos->save($mecanismo)) {
                 $this->Flash->success(__('Grabado con exito!.'));
                 return $this->redirect(['action' => 'index']);

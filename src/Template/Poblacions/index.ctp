@@ -16,6 +16,7 @@ $this->start('tb_actions');
         <tr>
             <th><?= $this->Paginator->sort('id'); ?></th>
             <th><?= $this->Paginator->sort('descripcion'); ?></th>
+            <th><?= $this->Paginator->sort('activo', 'Estado'); ?></th>
             <th class="actions"><?= __('Editar'); ?></th>
         </tr>
     </thead>
@@ -24,6 +25,7 @@ $this->start('tb_actions');
         <tr>
             <td><?= $this->Number->format($poblacion->id) ?></td>
             <td><?= h($poblacion->descripcion) ?></td>
+            <td><?= $poblacion->activo == 1 ? 'Activo' : 'Inactivo'; ?></td>
             <td class="actions">
                 <?= $this->Html->link('', ['action' => 'edit', $poblacion->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
             </td>

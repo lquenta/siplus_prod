@@ -18,7 +18,7 @@ class DerechosController extends AppController
      */
     public function index()
     {
-        
+
         $derechos = $this->paginate($this->Derechos);
 
         $this->set(compact('derechos'));
@@ -76,6 +76,7 @@ class DerechosController extends AppController
         $derecho = $this->Derechos->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $derecho = $this->Derechos->patchEntity($derecho, $this->request->data);
+            $derecho->activo = ($derecho->activo == 1);
             if ($this->Derechos->save($derecho)) {
                 $this->Flash->success(__('El derecho se ha grabado.'));
                 return $this->redirect(['action' => 'index']);

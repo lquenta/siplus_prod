@@ -76,6 +76,7 @@ class PoblacionsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $poblacion = $this->Poblacions->patchEntity($poblacion, $this->request->data);
+            $poblacion->activo = ($poblacion->activo == 1);
             if ($this->Poblacions->save($poblacion)) {
                 $this->Flash->success(__('Grabado con exito.'));
                 return $this->redirect(['action' => 'index']);

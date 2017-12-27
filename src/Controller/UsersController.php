@@ -122,8 +122,10 @@ class UsersController extends AppController
                 'fecha_modificacion'=>date('Y-m-d H:i:s'),
                 'rol_id'=>$request['rol_id'],
                 'email'=>$request['email'],
+                'activo'=>$request['activo']
                 );
             $user = $this->Users->patchEntity($user, $user_add);
+            $user->activo = ($user->activo == 1);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('El usuario ha sido grabado.'));
                 return $this->redirect(['action' => 'index']);
