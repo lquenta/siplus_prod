@@ -283,16 +283,16 @@ $this->assign('title', 'Aprobacion de Accion de Seguimiento ');
   </div>
 </fieldset>
 
-<?= $this->Form->button('Guardar',array('name'=>'btnGuardar','class'=>'btn btn-primary'));?>
+
 <div style="margin: 3px; display:inline">
 <?php
-if ($rol_usuario_final == 28) {
+/*if ($rol_usuario_final == 28) {
   echo $this->Form->button('Aprobar y publicar',array('name'=>'btnAprobar','class'=>'btn btn-danger'));
 }
 else
-{
+{*/
   echo $this->Form->button('Aprobar y enviar',array('name'=>'btnAprobar','class'=>'btn btn-danger'));
-}
+//}
   
  ?>
  </div>

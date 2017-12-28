@@ -90,7 +90,9 @@ class PagesController extends AppController
         $autorizacions =  $this->Autorizacions->find('all', [
             'contain' => ['Users', 'Accions', 'Estados']
         ])
-            ->where(['Autorizacions.usuario_id ' => $this->Auth->user('id'),'Autorizacions.estado_id '=>'1']);
+            ->where(['Autorizacions.usuario_id ' => $this->Auth->user('id'),
+                'OR' => [['Autorizacions.estado_id '=>'1'], ['Autorizacions.estado_id '=>'6'], ['Autorizacions.estado_id '=>'8']]
+                ]);
         //$autorizacions = $this->paginate($autorizacions);
         $solicitudInformacions=$this->SolicitudInformacions->find('all')->where(['usuario_id'=>$this->Auth->user('id'),'estado_id'=>'1']);
         //$solicitudInformacions = $this->paginate($solicitudInformacions);
