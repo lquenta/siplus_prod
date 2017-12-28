@@ -18,6 +18,7 @@ $this->start('tb_actions');
             <th><?= $this->Paginator->sort('nombre'); ?></th>
             <th><?= $this->Paginator->sort('link'); ?></th>
             <th><?= $this->Paginator->sort('Grupo'); ?></th>
+            <th><?= $this->Paginator->sort('activo', 'Estado'); ?></th>
             <th class="actions"><?= __('Acciones'); ?></th>
         </tr>
     </thead>
@@ -28,6 +29,7 @@ $this->start('tb_actions');
             <td><?= h($indicador->nombre) ?></td>
             <td><?= h($indicador->link) ?></td>
             <td><?= h($indicador->Grupo) ?></td>
+            <td><?= $indicador->activo == 1 ? 'Activo' : 'Inactivo'; ?></td>
             <td class="actions">
                 <?= $this->Html->link('', ['action' => 'edit', $indicador->id], ['title' => __('Editar'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
             </td>

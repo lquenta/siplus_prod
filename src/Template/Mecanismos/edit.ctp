@@ -42,6 +42,11 @@ $this->end();
     echo $this->Form->input('descripcion');
     echo $this->Form->input('Prefijo');
     ?>
+    <div class="checkbox">
+        <label>
+        <?= $this->Form->checkbox('activo'); ?> Activo
+        </label>
+    </div>
 </fieldset>
 <?= $this->Form->button(__("Grabar")); ?>
 <?= $this->Form->end() ?>

@@ -56,6 +56,10 @@ $this->end();
             <td><?= __('Fecha Modificacion') ?></td>
             <td><?= h($user->fecha_modificacion) ?></td>
         </tr>
+        <tr>
+            <td><?= __('Estado') ?></td>
+            <td><?= $user->activo == 1 ? 'Activo' : 'Inactivo'; ?></td>
+        </tr>
     </table>
 </div>
 

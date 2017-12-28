@@ -76,6 +76,7 @@ class IndicadorsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $indicador = $this->Indicadors->patchEntity($indicador, $this->request->data);
+            $indicador->activo = ($indicador->activo == 1);
             if ($this->Indicadors->save($indicador)) {
                 $this->Flash->success(__('Grabado con exito!'));
                 return $this->redirect(['action' => 'index']);
@@ -83,7 +84,7 @@ class IndicadorsController extends AppController
                 $this->Flash->error(__('Hubo en error, por favor intente de nuevo.'));
             }
         }
-       
+
         //var_dump($Grupos);
         $this->set(compact('indicador','Grupos'));
         $this->set('_serialize', ['indicador']);

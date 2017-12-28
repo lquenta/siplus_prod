@@ -45,6 +45,11 @@ $this->end();
     <?php
     echo $this->Form->input('descripcion');
     ?>
+    <div class="checkbox">
+        <label>
+        <?= $this->Form->checkbox('activo'); ?> Activo
+        </label>
+    </div>
 </fieldset>
 <?= $this->Form->button(__("Save")); ?>
 <?= $this->Form->end() ?>

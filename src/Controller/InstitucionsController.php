@@ -76,6 +76,7 @@ class InstitucionsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $institucion = $this->Institucions->patchEntity($institucion, $this->request->data);
+            $institucion->activo = ($institucion->activo == 1);
             if ($this->Institucions->save($institucion)) {
                 $this->Flash->success(__('The institucion has been saved.'));
                 return $this->redirect(['action' => 'index']);
