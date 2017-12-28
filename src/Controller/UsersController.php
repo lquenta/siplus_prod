@@ -25,11 +25,16 @@ class UsersController extends AppController
       {
           if ($this->request->is('post')) {
               $user = $this->Auth->identify();
-              if ($user) {
+              if ($user) {  // debug($user['activo'] == 0); die();
+                if ($user['activo'] == 0) {
+                    $this->Flash->error(__('El usuario no se encuentra activo.'));
+                    return;
+                }
+
                   $this->Auth->setUser($user);
                   return $this->redirect($this->Auth->redirectUrl());
               }
-              $this->Flash->error(__('Invalid username or password, try again'));
+              $this->Flash->error(__('Usuario o password incorrecto, por favor intente de nuevo.'));
           }
       }
 
