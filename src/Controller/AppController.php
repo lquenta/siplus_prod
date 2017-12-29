@@ -37,11 +37,12 @@ class AppController extends Controller
      *
      * @return void
      */
-   
+
     public function initialize()
     {
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
+            'authError' => 'No esta autorizado para realizar esta acción.',
             'authenticate' => array(
                'Form' => array(
                    'fields' => array('username' => 'nombre_usuario')

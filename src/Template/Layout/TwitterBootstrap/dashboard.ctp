@@ -56,15 +56,15 @@ $this->start('tb_body_start');
             </script>
 
             <div class="navbar-container" id="navbar-container">
-               
+
 
                 <div class="navbar-header pull-left">
-                    
+
                         <div class="navbar-brand">
                              <?=$this->Html->image('imgpsh_fullsize.png', ['class' => 'msg-photo','style'=>'height:150px']);?>
-                            
+
                         </div>
-                    
+
                 </div>
 
                 <div class="navbar-buttons navbar-header pull-right" role="navigation">
@@ -104,68 +104,69 @@ $this->start('tb_body_start');
                                     </a>
                                 </li>
                             </ul>
-                          
-        
+
+                            <?php if ($this->request->session()->read('Auth.User.id') == 2) : ?>
                             <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
                               <ul class="dropdown-menu">
-                                             
+
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "rols","action" => "index"]); ?>">
                                         Roles
                                     </a>
-                                </li>                                
+                                </li>
 
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "users","action" => "index"]); ?>">
                                         Usuarios
                                     </a>
-                                </li>                                
-                              
+                                </li>
+
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "Derechos","action" => "index"]); ?>">
                                         Derechos
                                     </a>
-                                </li>     
+                                </li>
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "Mecanismos","action" => "index"]); ?>">
-                                        Mecanismos 
+                                        Mecanismos
                                     </a>
-                                </li>  
+                                </li>
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "Poblacions","action" => "index"]); ?>">
-                                        Grupos 
+                                        Grupos
                                     </a>
-                                </li> 
+                                </li>
                                  <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "Indicadors","action" => "index"]); ?>">
-                                        Indicadores 
+                                        Indicadores
                                     </a>
                                 </li>
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "Institucions","action" => "index"]); ?>">
-                                        Instituciones 
+                                        Instituciones
                                     </a>
                                 </li>
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "Noticias","action" => "index"]); ?>">
-                                        Noticias 
+                                        Noticias
                                     </a>
-                                </li>   
+                                </li>
                                 <li class="list-group-item">
                                     <a href="<?= $this->Url->build(["controller" => "DocumentosMecanismos","action" => "index"]); ?>">
                                         Documentos y Mecanismos
                                     </a>
-                                </li>                                 
-                                
+                                </li>
+
                               </ul>
                             </li>
-                          
+                            <?php endif; ?>
+
 
                         </li>
                     </ul>
                 </div>
-            </div><!-- /.navbar-container --> 
+            </div><!-- /.navbar-container -->
         </div>
 
         <div class="main-container" id="main-container">
@@ -178,46 +179,46 @@ $this->start('tb_body_start');
                     try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
                 </script>
 
-               
+
 
                 <ul class="nav nav-pills">
                     <li class="active">
 
                         <a href="<?= $this->Url->build(["controller" => "SolicitudInformacions","action" => "index"]); ?>">
-                            
+
                             <span class="menu-text"> MENU </span>
                         </a>
                     </li>
                     <li class="">
                         <a href="<?= $this->Url->build(["controller" => "Recomendacions","action" => "add"]); ?>">
-                            
+
                             <span class="menu-text"> Nueva Recomendación</span>
                         </a>
                     </li>
                         <li class="">
                         <a href="<?= $this->Url->build(["controller" => "Recomendacions","action" => "index"]); ?>">
-                            
+
                             <span class="menu-text"> Nueva acción de seguimiento</span>
                         </a>
                     </li>
-                        
+
                     <li class="">
                         <a href="<?= $this->Url->build(["controller" => "SolicitudInformacions","action" => "add"]); ?>">
-                            
+
                             <span class="menu-text"> Nueva Solicitud de informacion</span>
                         </a>
                     </li>
                      <li class="">
                         <a href="<?= $this->Url->build(["controller" => "Pages","action" => "display","home"]); ?>">
-                            
+
                             <span> Panel de Control</span>
                         </a>
                     </li>
-                    
 
-                    
 
-                    
+
+
+
 
                 </ul>
 
@@ -226,7 +227,7 @@ $this->start('tb_body_start');
                 <script type="text/javascript">
                     try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
                 </script>
-            </div> 
+            </div>
 
             <div class="main-content">
                 <div class="main-content-inner">
@@ -243,7 +244,7 @@ $this->start('tb_body_start');
                             <li class="active"><?=$this->fetch('title'); ?></li>
                         </ul><!-- /.breadcrumb -->
 
-                        
+
                     </div>
 
                     <div class="page-content">
@@ -314,7 +315,7 @@ $this->start('tb_body_start');
                             </div><!-- /.ace-settings-box -->
                         </div><!-- /.ace-settings-container -->
 
-                        
+
 
                         <div class="row">
                             <div class="col-xs-12">
@@ -396,13 +397,13 @@ $this->start('tb_body_start');
         <?=$this->Html->script('highcharts');?>
         <script src="http://code.highcharts.com/highcharts-more.js"></script>
         <script src="http://code.highcharts.com/modules/solid-gauge.js"></script>
-    
+
 
         <!-- inline scripts related to this page -->
 
           <!-- Modal content-->
       <div class="modal fade" id="popupMessage" role="dialog">
-        <div class="modal-dialog">          
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -415,11 +416,11 @@ $this->start('tb_body_start');
               <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarMensaje()">Aceptar</button>
             </div>
           </div>
-          
+
         </div>
       </div>
       <!-- Fin Modal content-->
-       
+
     </body>
 </html>
 
@@ -432,8 +433,8 @@ $this->start('tb_body_start');
 
     function limpiarMensaje()
     {
-        $("#message").html("Procesando...");                
+        $("#message").html("Procesando...");
     }
 
-    
+
 </script>
