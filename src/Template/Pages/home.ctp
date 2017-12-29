@@ -116,7 +116,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                             <li role="presentation"><a href="#Consolidado" aria-controls="Consolidado" role="tab" data-toggle="tab">Consolidado</a></li>
 
                                                             <li role="presentation"><a href="#DatosEstadisticos" aria-controls="DatosEstadisticos" role="tab" data-toggle="tab">Datos Estadísticos</a></li>
-                                                                                                                     
+                                                             <li role="presentation"><a href="#SeguimientosPublicados" aria-controls="SeguimientosPublicados" role="tab" data-toggle="tab">Seguimientos Publicados</a></li>                                                         
                                                             
                                                           </ul>
 
@@ -372,7 +372,35 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                    </div>
                                                                     </div>  
                                                             </div>
-                                                          
+                                                          <div role="tabpanel" class="tab-pane" id="SeguimientosPublicados">
+                                                                
+                                                                <h2>Seguimientos pendientes de Aprobacion para su publicacion</h2>
+
+                                                                 <table class="table table-striped" cellpadding="0" cellspacing="0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th><?= $this->Paginator->sort('codigo','Código'); ?></th>
+                                                                            <th><?= $this->Paginator->sort('descripcion','Descripción'); ?></th>
+                                                                            <th><?= $this->Paginator->sort('fecha'); ?></th>
+                                                                            <th class="actions"><?= __('Acceso Directo'); ?></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <?php foreach ($seguimientos_pendientes_publicacion as $seguimiento_pendientes_publicacion): ?>
+                                                                        <tr>
+                                                                            <td><?= h($seguimiento_pendientes_publicacion->accion->codigo) ?></td>
+                                                                            <td><?= h($seguimiento_pendientes_publicacion->accion->descripcion) ?></td>
+                                                                            <td><?= h($seguimiento_pendientes_publicacion->accion->fecha) ?></td>
+                                                                            
+                                                                            <td class="actions">
+                                                                                <?= $this->Html->link('', ['controller'=>'Accions','action' => 'view', $seguimiento_pendientes_publicacion->accion->id], ['title' => __('Ver'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>               
+                                                                            </td>
+                                                                        </tr>
+                                                                        <?php endforeach; ?>
+                                                                    </tbody>
+                                                                </table>
+                                                                  
+                                                            </div>
                                                           </div>
 
                                                         </div>

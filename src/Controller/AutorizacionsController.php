@@ -449,63 +449,41 @@ class AutorizacionsController extends AppController
                         }
                    }elseif($accion->estado_id==5){
                     //se el estado es 5 quiere decir que la cancilleria ya acepto y debemos marcar la recomendacion como aceptada
-                       $accion->estado_id='9';
+                       $accion->estado_id='11';
                         $accion->fecha=date('Y-m-d H:i:s');
                         $res_save_accion = $this->Accions->save($accion);
-                       
+                        $autorizadores_cancilleria=$this->Users->find()->matching(
+                            'Rols', function ($q)  {
+                                return $q->where(['Rols.institucion_id' => '26']);
+                            }
+                        );
+                        foreach ($autorizadores_cancilleria as $autorizador ) {
+                          //registrar autorizacion para recomendacion  Min Justicia -> 1 , Procuradoria -> 3 , -> Cancilleria -> 4
+                          //aca una vez que el min de justicia acepte se envia a procuradoria para su atorizacion
+                          $autorizacion = $this->Autorizacions->newEntity();
+                            $req_autorizacion = array(
+                                'usuario_id'=>$autorizador['id'],
+                                'accion_id'=>$id,
+                                'estado_id'=>1,
+                                'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                                'visto_bueno_fisico'=>0
+                                );
+                            $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                            $this->Autorizacions->save($autorizacion);
+                             $req_notificacion = array(
+                                'accion_id'=>$id,
+                                'usuario_id'=>$autorizador['id'],
+                                'mensaje' =>'debe autorizar la publicacion del seguimiento con codigo:'.$accion->codigo,
+                                'fecha'=>date('Y-m-d H:i:s'),
+                                'estado'=>'pendiente'
+                                );
+                            $notificacion = $this->Notificacions->newEntity();
+                            $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
+                            $this->Notificacions->save($notificacion);
+                        }
                         
                    }
-                   /*$id_consolidado=0;
-                  if($consolidado_datos==null){
-                    //no hay datos de consolidado se crea consolidado
-                     //grabacion del consolidado este es el q se mostrara a procuraduria
-                        $consolidado = $this->Consolidados->newEntity();
-                        $req_consolidado = array(
-                          'accion_id'=>$id,
-                          'texto_consolidado'=>$this->request->data['texto_consolidado'],
-                          'user_id'=>$this->Auth->user('id'),
-                          'fecha_consolidado'=>date('Y-m-d H:i:s'),
-                          'fuente'=>$this->request->data['fuente']
-                          );
-                        $consolidado = $this->Consolidados->patchEntity($consolidado,$req_consolidado);
-                        $this->Consolidados->save($consolidado);
-                        $id_consolidado=$consolidado->id;
-                  }else{
-                    $consolidado_datos->texto_consolidado = $this->request->data['texto_consolidado'];
-                    $consolidado_datos->fecha_consolidado =date('Y-m-d H:i:s');
-                    $consolidado_datos->user_id = $this->Auth->user('id');
-                    $consolidado_datos->fuente =$this->request->data['fuente'];
-                    $test=$this->Consolidados->save($consolidado_datos);
-                    $id_consolidado=$consolidado_datos->id;
-                  }
-                  $texto_consolidado=$this->request->data['texto_consolidado'];
-                  //grabacion de adjuntos
-                  $adjuntos_consolidado = null;
-                  if (isset($this->request->data['adjuntos_consolidado'])) {
-                    $adjuntos_consolidado = $this->request->data['adjuntos_consolidado'];
-                  }
-                  if($adjuntos_consolidado != null && $adjuntos_consolidado[0]['name']!=''){
-                    foreach ($adjuntos_consolidado as $adjunto ) {
-                        $adjunto_req = [
-                            'name' => $adjunto['name'],
-                            'type' => $adjunto['type'],
-                            'tmp_name' => $adjunto['tmp_name'],
-                            'error' => $adjunto['error'],
-                            'size' => $adjunto['size']
-                        ];
-                        $adjunto_req['name']=$this->sanitize($adjunto_req['name']);
-                        //$file_name =  ROOT .DS. 'uploads' .DS. time().'_'.$adjunto_req['name'];
-                        $file_name_part = time().'_'.$adjunto_req['name'];
-                        $file_name =  ROOT .DS. 'webroot'.DS.'uploads'.DS. $file_name_part;
-                        $res=move_uploaded_file($adjunto_req['tmp_name'],$file_name); 
-                        $adj_save = array(
-                            'consolidado_id'=>$id_consolidado,
-                            'link'=>$file_name_part);
-                        $adjuntosConsolidados = $this->AdjuntosConsolidados->newEntity();
-                        $adjuntosConsolidados = $this->AdjuntosConsolidados->patchEntity($adjuntosConsolidados, $adj_save);
-                        $this->AdjuntosConsolidados->save($adjuntosConsolidados);
-                    }
-                  }*/
+                  
                   /*Grabacion de la autorizacion*/
                   if ($this->Autorizacions->save($autorizacion_actual)) {
                 //     if(true){

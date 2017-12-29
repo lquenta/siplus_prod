@@ -43,7 +43,185 @@ class AccionsController extends AppController
         $this->set('accion', $accion);
         $this->set('_serialize', ['accion']);
     }
-     
+    public function aprobarPublicacionSeguimiento($id){
+      $this->loadModel('Accions');
+        $this->loadModel('AccionSolicitud');
+        $this->loadModel('Recomendacions');
+        $this->loadModel('Poblacions');
+        $this->loadModel('PoblacionRecomendacion');
+        $this->loadModel('DerechoRecomendacion');
+        $this->loadModel('Derechos');
+        $this->loadModel('InstitucionRecomendacion');
+        $this->loadModel('Institucions');
+        $this->loadModel('MecanismoRecomendacion');
+        $this->loadModel('Mecanismos');
+        $this->loadModel('IndicadoresDerechos');
+        $this->loadModel('AdjuntosAccions');
+        $this->loadModel('Users');
+        $this->loadModel('Notificacions');
+        $this->loadModel('AccionSolicitud');
+        $this->loadModel('Consolidados');
+        $this->loadModel('AdjuntosConsolidados');
+        $this->loadModel('Indicadors');
+        $this->loadModel('ComiteRecomendacions');
+        $this->loadModel('Comites');
+        $this->loadModel('Rols');
+        $this->loadModel('ConsolidadoIndicadores');
+       $accion =$this->Accions->get($id,[
+            'contain' => ['Users', 'Recomendacions', 'AdjuntosAccions']
+        ]);
+        $recomendacion = $this->Recomendacions->get($accion->recomendacion->id, [
+            'contain' => ['Users', 'Estados', 'Accions', 'AdjuntosRecomendacions', 'DerechoRecomendacion', 'InstitucionRecomendacion', 'MecanismoRecomendacion', 'PoblacionRecomendacion', 'RecomendacionParametros']
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            if($accion->estado_id==11 ){
+              $accion->estado_id='12';
+              $accion->fecha=date('Y-m-d H:i:s');
+              $res_save_accion = $this->Accions->save($accion);
+              //buscamos los autorizadores de la procuradoria 
+              $autorizadores_procuradoria=$this->Users->find()->matching(
+                  'Rols', function ($q) {
+                      return $q->where(['Rols.institucion_id' => '27']);
+                  }
+              );
+              foreach ($autorizadores_procuradoria as $autorizador ) {
+                //registrar autorizacion para recomendacion  Min Justicia -> 1 , Procuradoria -> 3 , -> Cancilleria -> 4
+                //aca una vez que el min de justicia acepte se envia a procuradoria para su atorizacion
+                $autorizacion = $this->Autorizacions->newEntity();
+                  $req_autorizacion = array(
+                      'usuario_id'=>$autorizador['id'],
+                      'accion_id'=>$id,
+                      'estado_id'=>1,
+                      'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                      'visto_bueno_fisico'=>0
+                      );
+                  $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                  $this->Autorizacions->save($autorizacion);
+                   $req_notificacion = array(
+                      'accion_id'=>$id,
+                      'usuario_id'=>$autorizador['id'],
+                      'mensaje' => 'debe aprobar la publicacion con codigo:'.$accion->codigo,
+                      'fecha'=>date('Y-m-d H:i:s'),
+                      'estado'=>'pendiente'
+                      );
+                  $notificacion = $this->Notificacions->newEntity();
+                  $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
+                  $this->Notificacions->save($notificacion);
+              }
+            }
+            elseif($accion->estado_id==12){
+                $accion->estado_id='14';
+                $accion->fecha=date('Y-m-d H:i:s');
+                $res_save_accion = $this->Accions->save($accion);
+                //buscamos los autorizadores de la procuradoria 
+                $autorizadores_cancilleria=$this->Users->find()->matching(
+                    'Rols', function ($q)  {
+                        return $q->where(['Rols.institucion_id' => '28']);
+                    }
+                );
+                foreach ($autorizadores_cancilleria as $autorizador ) {
+                  //registrar autorizacion para recomendacion  Min Justicia -> 1 , Procuradoria -> 3 , -> Cancilleria -> 4
+                  //aca una vez que el min de justicia acepte se envia a procuradoria para su atorizacion
+                  $autorizacion = $this->Autorizacions->newEntity();
+                    $req_autorizacion = array(
+                        'usuario_id'=>$autorizador['id'],
+                        'accion_id'=>$id,
+                        'estado_id'=>1,
+                        'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                        'visto_bueno_fisico'=>0
+                        );
+                    $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                    $this->Autorizacions->save($autorizacion);
+                     $req_notificacion = array(
+                        'accion_id'=>$id,
+                        'usuario_id'=>$autorizador['id'],
+                        'mensaje' =>'debe autorizar la PUBLICACION con codigo:'.$accion->codigo,
+                        'fecha'=>date('Y-m-d H:i:s'),
+                        'estado'=>'pendiente'
+                        );
+                    $notificacion = $this->Notificacions->newEntity();
+                    $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
+                    $this->Notificacions->save($notificacion);
+                }
+            }
+            elseif($accion->estado_id==14){
+              $accion->estado_id='16';
+               $accion->fecha=date('Y-m-d H:i:s');
+               $res_save_accion = $this->Accions->save($accion);
+            }
+          
+          }
+          
+          return $this->redirect('/');
+    }
+    public function rechazarPublicacionSeguimiento($id){
+      $this->loadModel('Accions');
+        $this->loadModel('AccionSolicitud');
+        $this->loadModel('Recomendacions');
+        $this->loadModel('Poblacions');
+        $this->loadModel('PoblacionRecomendacion');
+        $this->loadModel('DerechoRecomendacion');
+        $this->loadModel('Derechos');
+        $this->loadModel('InstitucionRecomendacion');
+        $this->loadModel('Institucions');
+        $this->loadModel('MecanismoRecomendacion');
+        $this->loadModel('Mecanismos');
+        $this->loadModel('IndicadoresDerechos');
+        $this->loadModel('AdjuntosAccions');
+        $this->loadModel('Users');
+        $this->loadModel('Notificacions');
+        $this->loadModel('AccionSolicitud');
+        $this->loadModel('Consolidados');
+        $this->loadModel('AdjuntosConsolidados');
+        $this->loadModel('Indicadors');
+        $this->loadModel('ComiteRecomendacions');
+        $this->loadModel('Autorizacions');
+        $this->loadModel('Rols');
+        $this->loadModel('ConsolidadoIndicadores');
+       $accion =$this->Accions->get($id,[
+            'contain' => ['Users', 'Recomendacions', 'AdjuntosAccions']
+        ]);
+        $recomendacion = $this->Recomendacions->get($accion->recomendacion->id, [
+            'contain' => ['Users', 'Estados', 'Accions', 'AdjuntosRecomendacions', 'DerechoRecomendacion', 'InstitucionRecomendacion', 'MecanismoRecomendacion', 'PoblacionRecomendacion', 'RecomendacionParametros']
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+          
+            $accion->estado_id='11';
+            $accion->fecha=date('Y-m-d H:i:s');
+            $res_save_accion = $this->Accions->save($accion);
+            //buscamos los autorizadores de la MINJUS 
+            $autorizadores_procuradoria=$this->Users->find()->matching(
+                'Rols', function ($q) {
+                    return $q->where(['Rols.institucion_id' => '26']);
+                }
+            );
+            foreach ($autorizadores_procuradoria as $autorizador ) {
+              $autorizacion = $this->Autorizacions->newEntity();
+                $req_autorizacion = array(
+                    'usuario_id'=>$autorizador['id'],
+                    'accion_id'=>$id,
+                    'estado_id'=>1,
+                    'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                    'visto_bueno_fisico'=>0
+                    );
+                $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                $this->Autorizacions->save($autorizacion);
+                 $req_notificacion = array(
+                    'accion_id'=>$id,
+                    'usuario_id'=>$autorizador['id'],
+                    'mensaje' => 'se rechazo su publicacion:'.$accion->codigo,
+                    'fecha'=>date('Y-m-d H:i:s'),
+                    'estado'=>'pendiente'
+                    );
+                $notificacion = $this->Notificacions->newEntity();
+                $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
+                $this->Notificacions->save($notificacion);
+            }
+            $this->Flash->success(__('Se ha rechazado la publicacion del seguimiento de la recomendacion.'));
+          }
+          
+          return $this->redirect('/');
+    }
     /**
      * Add method
      *

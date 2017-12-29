@@ -121,8 +121,13 @@ class PagesController extends AppController
        debug($recomendaciones_segumiento->all());*/
 
        
-
-        $this->set(compact('autorizacions','solicitudInformacions','accionSolicitud','accions_sin_responder_entidades','listRecomendacionsPie','listSolictudTacomentro', 'listNuevasRecomendaciones','listAccionesSeguimiento','listNuevaSolicitudInformacion','listAccionesSegPie'));
+       $seguimientos_pendientes_publicacion =  $this->Autorizacions->find('all', [
+            'contain' => ['Users', 'Accions', 'Estados']
+        ])
+            ->where(['Autorizacions.usuario_id ' => $this->Auth->user('id'),
+                'OR' => [['Autorizacions.estado_id '=>'11']]
+                ]);
+        $this->set(compact('autorizacions','solicitudInformacions','accionSolicitud','accions_sin_responder_entidades','listRecomendacionsPie','listSolictudTacomentro', 'listNuevasRecomendaciones','listAccionesSeguimiento','listNuevaSolicitudInformacion','listAccionesSegPie','seguimientos_pendientes_publicacion'));
         $this->set('_serialize', ['solicitudInformacions']);
 
         //$solicitudInstituciones= 
