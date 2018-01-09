@@ -41,7 +41,7 @@ use Cake\Routing\Router;
  *
  */
 Router::defaultRouteClass('DashedRoute');
-Router::connect('/', array('controller' => 'pages', 'action' => 'home'));
+Router::connect('/', array('controller' => 'Users', 'action' => 'login'));
 //Router::connect('/', array('controller' => 'SolicitudInformacions', 'action' => 'index'));
 
 Router::scope('/', function (RouteBuilder $routes) {

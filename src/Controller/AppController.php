@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -58,9 +59,12 @@ class AppController extends Controller
                 'action' => 'index'
             ],
             'logoutRedirect' => [
-                'controller' => 'Pages',
-                'action' => 'display',
-                'home'
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login'
             ]
         ]);
     }
@@ -104,5 +108,23 @@ class AppController extends Controller
                 mb_strtolower($clean, 'UTF-8') :
                 strtolower($clean) :
             $clean;
+    }
+
+    /**
+     * Check if session user is in role.
+     *
+     * @param string $role The role to check.
+     * @return bool
+     */
+    function isInRole($role) {
+        return true;
+        /* $userId = $this->request->session()->read('Auth.User.id');
+        $user =  TableRegistry::get('Users')->get($userId); // debug($user); die();
+        $userRole = $user->rol_id == 2 ? 'Administrador' : 'Other';
+
+        if ($userRole == $role) {
+            return true;
+        }
+        return false; */
     }
 }

@@ -24,16 +24,15 @@ class UsersController extends AppController
       public function login()
       {
           if ($this->request->is('post')) {
-              $user = $this->Auth->identify();
-              if ($user) {  // debug($user['activo'] == 0); die();
+              $user = $this->Auth->identify(); // debug($this->Auth); die();
+              if ($user) {
                 if ($user['activo'] == 0) {
                     $this->Flash->error(__('El usuario no se encuentra activo.'));
                     return;
                 }
 
                   $this->Auth->setUser($user);
-                  //return $this->redirect($this->Auth->redirectUrl());
-                  return $this->redirect('/');
+                  return $this->redirect($this->Auth->redirectUrl());
               }
               $this->Flash->error(__('Usuario o password incorrecto, por favor intente de nuevo.'));
           }
