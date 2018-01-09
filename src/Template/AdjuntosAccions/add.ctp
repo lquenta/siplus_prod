@@ -21,11 +21,11 @@ $this->end();
 ?>
 <?= $this->Form->create($adjuntosAccion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Adjuntos Accion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Adjuntos Accion']) ?></legend>
     <?php
     echo $this->Form->input('accion_id', ['options' => $accions]);
     echo $this->Form->input('link');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

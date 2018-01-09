@@ -21,11 +21,11 @@ $this->end();
 ?>
 <?= $this->Form->create($adjuntosRecomendacion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Adjuntos Recomendacion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Adjuntos Recomendacion']) ?></legend>
     <?php
     echo $this->Form->input('recomendacion_id', ['options' => $recomendacions]);
     echo $this->Form->input('link');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

@@ -29,7 +29,7 @@ $this->end();
 ?>
 <?= $this->Form->create($version); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Version']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Version']) ?></legend>
     <?php
     echo $this->Form->input('recomendacion_id', ['options' => $recomendacions]);
     echo $this->Form->input('titulo');
@@ -38,5 +38,5 @@ $this->end();
     echo $this->Form->input('usuario_id', ['options' => $users]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

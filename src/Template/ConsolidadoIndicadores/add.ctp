@@ -25,11 +25,11 @@ $this->end();
 ?>
 <?= $this->Form->create($consolidadoIndicadore); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Consolidado Indicadore']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Consolidado Indicadore']) ?></legend>
     <?php
     echo $this->Form->input('consolidado_id', ['options' => $consolidados]);
     echo $this->Form->input('indicador_id', ['options' => $indicadors]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

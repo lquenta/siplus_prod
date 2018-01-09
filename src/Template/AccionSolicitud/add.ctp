@@ -33,7 +33,7 @@ $this->end();
 ?>
 <?= $this->Form->create($accionSolicitud); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Accion Solicitud']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Accion Solicitud']) ?></legend>
     <?php
     echo $this->Form->input('accion_id', ['options' => $accions]);
     echo $this->Form->input('institucion_id', ['options' => $institucions]);
@@ -44,5 +44,5 @@ $this->end();
     echo $this->Form->input('user_id', ['options' => $users]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

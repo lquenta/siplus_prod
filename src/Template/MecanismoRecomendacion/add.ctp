@@ -25,11 +25,11 @@ $this->end();
 ?>
 <?= $this->Form->create($mecanismoRecomendacion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Mecanismo Recomendacion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Mecanismo Recomendacion']) ?></legend>
     <?php
     echo $this->Form->input('mecanismo_id', ['options' => $mecanismos]);
     echo $this->Form->input('recomendacion_id', ['options' => $recomendacions]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

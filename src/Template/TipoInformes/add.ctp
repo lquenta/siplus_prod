@@ -23,10 +23,10 @@ $this->end();
 ?>
 <?= $this->Form->create($tipoInforme); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Tipo Informe']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Tipo Informe']) ?></legend>
     <?php
     echo $this->Form->input('descripcion');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

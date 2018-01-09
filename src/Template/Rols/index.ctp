@@ -11,7 +11,7 @@ $this->start('tb_actions');
 <?php $this->end(); ?>
 <?php $this->assign('tb_sidebar', '<ul class="nav nav-sidebar">' . $this->fetch('tb_actions') . '</ul>'); ?>
 <div class="col-xs-12">
-    <?= $this->Html->link('Añadir', ['action' => 'add'], ['title' => __('Add'), 'class' => 'btn btn-default glyphicon glyphicon-plus']) ?>
+    <?= $this->Html->link('Añadir', ['action' => 'add'], ['title' => __('Añadir'), 'class' => 'btn btn-default glyphicon glyphicon-plus']) ?>
 </div>
 <table class="table table-striped" cellpadding="0" cellspacing="0">
     <thead>
@@ -19,7 +19,7 @@ $this->start('tb_actions');
             <th><?= $this->Paginator->sort('id'); ?></th>
             <th><?= $this->Paginator->sort('nombre'); ?></th>
             <th><?= $this->Paginator->sort('institucion_id'); ?></th>
-            <th class="actions"><?= __('Actions'); ?></th>
+            <th class="actions"><?= __('Acciones'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -28,11 +28,11 @@ $this->start('tb_actions');
             <td><?= $this->Number->format($rol->id) ?></td>
             <td><?= h($rol->nombre) ?></td>
             <td>
-                <?= $rol->has('institucion') ? $this->Html->link($rol->institucion->descripcion, ['controller' => 'Institucions', 'action' => 'view', $rol->institucion->id]) : '' ?>
+                <?= h($rol->institucion->descripcion) ?>
             </td>
             <td class="actions">
-                <?= $this->Html->link('', ['action' => 'view', $rol->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                <?= $this->Html->link('', ['action' => 'edit', $rol->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
+                <?= $this->Html->link('', ['action' => 'view', $rol->id], ['title' => __('Ver'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
+                <?= $this->Html->link('', ['action' => 'edit', $rol->id], ['title' => __('Editar'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -40,9 +40,9 @@ $this->start('tb_actions');
 </table>
 <div class="paginator">
     <ul class="pagination">
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-        <?= $this->Paginator->numbers(['before' => '', 'after' => '']) ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
+        <?= $this->Paginator->prev('< ' . __('previo')) ?>
+        <?= $this->Paginator->numbers(['antes' => '', 'despues' => '']) ?>
+        <?= $this->Paginator->next(__('siguiente') . ' >') ?>
     </ul>
     <p><?= $this->Paginator->counter() ?></p>
 </div>

@@ -37,7 +37,7 @@ $this->end();
 ?>
 <?= $this->Form->create($user); ?>
 <fieldset>
-    <legend><?= __('Editar {0}', ['User']) ?></legend>
+    <legend><?= __('Editar {0}', ['Usuario']) ?></legend>
     <?php
     echo $this->Form->input('nombre_usuario');
     echo $this->Form->input('password');
@@ -50,5 +50,5 @@ $this->end();
         </label>
     </div>
 </fieldset>
-<?= $this->Form->button(__("Save")); ?>
+<?= $this->Form->button(__("Grabar")); ?>
 <?= $this->Form->end() ?>

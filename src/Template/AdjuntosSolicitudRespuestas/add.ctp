@@ -21,11 +21,11 @@ $this->end();
 ?>
 <?= $this->Form->create($adjuntosSolicitudRespuesta); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Adjuntos Solicitud Respuesta']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Adjuntos Solicitud Respuesta']) ?></legend>
     <?php
     echo $this->Form->input('solicitud_respuesta_id', ['options' => $solicitudRespuestas]);
     echo $this->Form->input('link');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

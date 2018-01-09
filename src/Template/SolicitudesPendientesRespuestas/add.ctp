@@ -29,7 +29,7 @@ $this->end();
 ?>
 <?= $this->Form->create($solicitudesPendientesRespuesta); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Solicitudes Pendientes Respuesta']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Solicitudes Pendientes Respuesta']) ?></legend>
     <?php
     echo $this->Form->input('usuario_id', ['options' => $users]);
     echo $this->Form->input('estado_id', ['options' => $estados]);
@@ -37,5 +37,5 @@ $this->end();
     echo $this->Form->input('solicitud_informacion_id', ['options' => $solicitudInformacions]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

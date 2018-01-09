@@ -25,11 +25,11 @@ $this->end();
 ?>
 <?= $this->Form->create($indicadoresDerecho); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Indicadores Derecho']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Indicadores Derecho']) ?></legend>
     <?php
     echo $this->Form->input('derecho_id', ['options' => $derechos]);
     echo $this->Form->input('indicador_id', ['options' => $indicadors]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

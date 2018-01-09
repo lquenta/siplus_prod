@@ -21,10 +21,10 @@ $this->end();
 ?>
 <?= $this->Form->create($poblacion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Poblacion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Poblacion']) ?></legend>
     <?php
     echo $this->Form->input('descripcion');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

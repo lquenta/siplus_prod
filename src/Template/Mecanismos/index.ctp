@@ -9,7 +9,7 @@ $this->start('tb_actions');
 <?php $this->end(); ?>
 <?php $this->assign('tb_sidebar', '<ul class="nav nav-sidebar">' . $this->fetch('tb_actions') . '</ul>'); ?>
 <div class="col-xs-12">
-    <?= $this->Html->link('Añadir', ['action' => 'add'], ['title' => __('Add'), 'class' => 'btn btn-default glyphicon glyphicon-plus']) ?>
+    <?= $this->Html->link('Añadir', ['action' => 'add'], ['title' => __('Añadir'), 'class' => 'btn btn-default glyphicon glyphicon-plus']) ?>
 </div>
 <table class="table table-striped" cellpadding="0" cellspacing="0">
     <thead>

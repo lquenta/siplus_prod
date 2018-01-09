@@ -32,7 +32,8 @@ class UsersController extends AppController
                 }
 
                   $this->Auth->setUser($user);
-                  return $this->redirect($this->Auth->redirectUrl());
+                  //return $this->redirect($this->Auth->redirectUrl());
+                  return $this->redirect('/');
               }
               $this->Flash->error(__('Usuario o password incorrecto, por favor intente de nuevo.'));
           }

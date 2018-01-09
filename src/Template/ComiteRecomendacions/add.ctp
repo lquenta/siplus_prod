@@ -25,11 +25,11 @@ $this->end();
 ?>
 <?= $this->Form->create($comiteRecomendacion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Comite Recomendacion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Comite Recomendacion']) ?></legend>
     <?php
     echo $this->Form->input('recomendacion_id', ['options' => $recomendacions]);
     echo $this->Form->input('comite_id', ['options' => $comites]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

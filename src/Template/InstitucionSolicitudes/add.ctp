@@ -25,11 +25,11 @@ $this->end();
 ?>
 <?= $this->Form->create($institucionSolicitude); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Institucion Solicitude']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Institucion Solicitude']) ?></legend>
     <?php
     echo $this->Form->input('institucion_id', ['options' => $institucions]);
     echo $this->Form->input('solicitud_informacion_id', ['options' => $solicitudInformacions]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

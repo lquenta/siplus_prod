@@ -25,11 +25,11 @@ $this->end();
 ?>
 <?= $this->Form->create($institucionRecomendacion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Institucion Recomendacion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Institucion Recomendacion']) ?></legend>
     <?php
     echo $this->Form->input('institucion_id', ['options' => $institucions]);
     echo $this->Form->input('recomendacion_id', ['options' => $recomendacions]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

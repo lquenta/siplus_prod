@@ -21,11 +21,11 @@ $this->end();
 ?>
 <?= $this->Form->create($adjuntosVersion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Adjuntos Version']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Adjuntos Version']) ?></legend>
     <?php
     echo $this->Form->input('version_id', ['options' => $versions]);
     echo $this->Form->input('link');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

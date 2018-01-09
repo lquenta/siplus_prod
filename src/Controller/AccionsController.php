@@ -64,7 +64,7 @@ class AccionsController extends AppController
         $this->loadModel('AdjuntosConsolidados');
         $this->loadModel('Indicadors');
         $this->loadModel('ComiteRecomendacions');
-        $this->loadModel('Comites');
+        $this->loadModel('Autorizacions');
         $this->loadModel('Rols');
         $this->loadModel('ConsolidadoIndicadores');
        $accion =$this->Accions->get($id,[
@@ -145,7 +145,7 @@ class AccionsController extends AppController
                 }
             }
             elseif($accion->estado_id==14){
-              $accion->estado_id='16';
+              $accion->estado_id='9';
                $accion->fecha=date('Y-m-d H:i:s');
                $res_save_accion = $this->Accions->save($accion);
             }

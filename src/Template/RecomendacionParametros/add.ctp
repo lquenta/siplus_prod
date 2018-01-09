@@ -21,12 +21,12 @@ $this->end();
 ?>
 <?= $this->Form->create($recomendacionParametro); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Recomendacion Parametro']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Recomendacion Parametro']) ?></legend>
     <?php
     echo $this->Form->input('recomendacion_id', ['options' => $recomendacions]);
     echo $this->Form->input('prioridad');
     echo $this->Form->input('tiempo');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

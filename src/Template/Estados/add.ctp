@@ -25,10 +25,10 @@ $this->end();
 ?>
 <?= $this->Form->create($estado); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Estado']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Estado']) ?></legend>
     <?php
     echo $this->Form->input('descripcion');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

@@ -25,7 +25,7 @@ $this->end();
 ?>
 <?= $this->Form->create($consolidado); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Consolidado']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Consolidado']) ?></legend>
     <?php
     echo $this->Form->input('accion_id', ['options' => $accions]);
     echo $this->Form->input('texto_consolidado');
@@ -33,5 +33,5 @@ $this->end();
     echo $this->Form->input('fecha_consolidado');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

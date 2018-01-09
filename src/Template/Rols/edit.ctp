@@ -41,11 +41,11 @@ $this->end();
 ?>
 <?= $this->Form->create($rol); ?>
 <fieldset>
-    <legend><?= __('Edit {0}', ['Rol']) ?></legend>
+    <legend><?= __('Editar {0}', ['Rol']) ?></legend>
     <?php
     echo $this->Form->input('nombre');
     echo $this->Form->input('institucion_id', ['options' => $institucions]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Save")); ?>
+<?= $this->Form->button(__("Grabar")); ?>
 <?= $this->Form->end() ?>

@@ -21,11 +21,11 @@ $this->end();
 ?>
 <?= $this->Form->create($adjuntosConsolidado); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Adjuntos Consolidado']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Adjuntos Consolidado']) ?></legend>
     <?php
     echo $this->Form->input('consolidado_id', ['options' => $consolidados]);
     echo $this->Form->input('link');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

@@ -42,7 +42,8 @@ $this->end();
         </tr>
         <tr>
             <td><?= __('Institucion') ?></td>
-            <td><?= $rol->has('institucion') ? $this->Html->link($rol->institucion->descripcion, ['controller' => 'Institucions', 'action' => 'view', $rol->institucion->id]) : '' ?></td>
+            <td><?= h($rol->institucion->descripcion) ?></td>
+           
         </tr>
         <tr>
             <td><?= __('Id') ?></td>
@@ -51,40 +52,3 @@ $this->end();
     </table>
 </div>
 
-<div class="panel panel-default">
-    <!-- Panel header -->
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= __('usuarios relacionados') ?></h3>
-    </div>
-    <?php if (!empty($rol->users)): ?>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Nombre Usuario') ?></th>
-                <th><?= __('Fecha Creacion') ?></th>
-                <th><?= __('Fecha Modificacion') ?></th>
-                <th><?= __('Rol Id') ?></th>
-                <th class="actions"><?= __('Acciones') ?></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($rol->users as $users): ?>
-                <tr>
-                    <td><?= h($users->id) ?></td>
-                    <td><?= h($users->nombre_usuario) ?></td>
-                    <td><?= h($users->fecha_creacion) ?></td>
-                    <td><?= h($users->fecha_modificacion) ?></td>
-                    <td><?= h($users->rol_id) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link('', ['controller' => 'Users', 'action' => 'edit', $users->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                       
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p class="panel-body">no related Users</p>
-    <?php endif; ?>
-</div>

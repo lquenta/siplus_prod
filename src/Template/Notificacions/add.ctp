@@ -25,7 +25,7 @@ $this->end();
 ?>
 <?= $this->Form->create($notificacion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Notificacion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Notificacion']) ?></legend>
     <?php
     echo $this->Form->input('recomendacion_id', ['options' => $recomendacions]);
     echo $this->Form->input('usuario_id', ['options' => $users]);
@@ -34,5 +34,5 @@ $this->end();
     echo $this->Form->input('estado');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

@@ -29,7 +29,7 @@ $this->end();
 ?>
 <?= $this->Form->create($autorizacion); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Autorizacion']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Autorizacion']) ?></legend>
     <?php
     echo $this->Form->input('usuario_id', ['options' => $users]);
     echo $this->Form->input('estado_id', ['options' => $estados]);
@@ -38,5 +38,5 @@ $this->end();
     echo $this->Form->input('accion_id', ['options' => $accions]);
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>

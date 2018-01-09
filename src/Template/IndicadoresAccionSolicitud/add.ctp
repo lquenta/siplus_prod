@@ -21,11 +21,11 @@ $this->end();
 ?>
 <?= $this->Form->create($indicadoresAccionSolicitud); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Indicadores Accion Solicitud']) ?></legend>
+    <legend><?= __('Añadir {0}', ['Indicadores Accion Solicitud']) ?></legend>
     <?php
     echo $this->Form->input('indicador_id', ['options' => $indicadors]);
     echo $this->Form->input('accion_solicitud_id');
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Añadir")); ?>
 <?= $this->Form->end() ?>
