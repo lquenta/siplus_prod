@@ -17,7 +17,7 @@ $this->Html->css('BootstrapUI.dashboard', ['block' => true]);
 $this->prepend('tb_body_attrs', ' class="' . implode(' ', [$this->request->controller, $this->request->action]) . '" ');
 $this->start('tb_body_start');
 ?>
-<?=$this->Html->css('font-awesome/4.2.0/css/font-awesome.min');?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- page specific plugin styles -->
 

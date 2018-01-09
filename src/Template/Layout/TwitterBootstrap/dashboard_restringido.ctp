@@ -5,7 +5,7 @@ body{
     margin-top: -50px;
 }
     .navbar{
-        background: #438eb9;        
+        background: #438eb9;
     }
 </style>
 <?php
@@ -15,7 +15,7 @@ $this->Html->css('BootstrapUI.dashboard', ['block' => true]);
 $this->prepend('tb_body_attrs', ' class="' . implode(' ', [$this->request->controller, $this->request->action]) . '" ');
 $this->start('tb_body_start');
 ?>
-<?=$this->Html->css('font-awesome/4.2.0/css/font-awesome.min');?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- page specific plugin styles -->
 
@@ -65,18 +65,18 @@ $this->start('tb_body_start');
                 </button>
 
                  <div class="navbar-header pull-left">
-                    
+
                         <div class="navbar-brand">
                              <?=$this->Html->image('imgpsh_fullsize.png', ['class' => 'msg-photo','style'=>'height:150px']);?>
-                            
+
                         </div>
-                    
+
                 </div>
 
                 <div class="navbar-buttons navbar-header pull-right" role="navigation">
                     <ul class="nav ace-nav">
-                        
-                    
+
+
                         <li class="light-blue">
                             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                                 <?=$this->Html->image('avatars/user.jpg', ['class' => 'msg-photo']);?>
@@ -137,7 +137,7 @@ $this->start('tb_body_start');
                             <li class="active"><?=$this->fetch('title'); ?></li>
                         </ul><!-- /.breadcrumb -->
 
-                        
+
                     </div>
 
                     <div class="page-content">
@@ -208,7 +208,7 @@ $this->start('tb_body_start');
                             </div><!-- /.ace-settings-box -->
                         </div><!-- /.ace-settings-container -->
 
-                        
+
 
                         <div class="row">
                             <div class="col-xs-12">
@@ -289,10 +289,10 @@ $this->start('tb_body_start');
         <?=$this->Html->script('ace.min');?>
 
         <!-- inline scripts related to this page -->
-     
+
           <!-- Modal content-->
       <div class="modal fade" id="popupMessage" role="dialog">
-        <div class="modal-dialog">          
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -305,11 +305,11 @@ $this->start('tb_body_start');
               <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarMensaje()">Aceptar</button>
             </div>
           </div>
-          
+
         </div>
       </div>
       <!-- Fin Modal content-->
-       
+
     </body>
 </html>
 
@@ -322,8 +322,8 @@ $this->start('tb_body_start');
 
     function limpiarMensaje()
     {
-        $("#message").html("Procesando...");                
+        $("#message").html("Procesando...");
     }
 
-    
+
 </script>
