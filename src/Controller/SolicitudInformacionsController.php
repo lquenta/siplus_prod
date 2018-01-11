@@ -11,6 +11,15 @@ use App\Controller\AppController;
 class SolicitudInformacionsController extends AppController
 {
 
+    public function isAuthorized($user = null) {
+        // Registrador puede realizar todas las acciones de este controlador.
+        if ($this->isInRole("Registrador")) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Index method
      *
@@ -57,7 +66,7 @@ class SolicitudInformacionsController extends AppController
         $this->loadModel('Users');
         $this->loadModel('SolicitudesPendientesRespuestas');
         $this->loadModel('InstitucionRecomendacion');
-        
+
         $gruposInstitucioones = $this->Institucions->find()->where(['AccionSeg_Activo = 1']);
         $gruposInstitucioones->select(['grupo'])->distinct(['grupo'])->all();
         $institucionesNew = $this->Institucions->find()->where(['AccionSeg_Activo = 1'])->toArray();
@@ -83,12 +92,12 @@ class SolicitudInformacionsController extends AppController
                 );
             $solicitud = $this->SolicitudInformacions->patchEntity($solicitud, $solicitud_req);
             $res_save_solicitud = $this->SolicitudInformacions->save($solicitud);
-            
+
             if ($res_save_solicitud) {
                 $last_id_solicitud = $res_save_solicitud->id;
                 //para los relacionados a Poblacion_recomendacion
-                
-                
+
+
                 foreach ($request['institucions'] as $institucion) {
                       $institucionSolicitud = $this->InstitucionSolicitudes->newEntity();
                       $institucion_solicitud_req = array(
@@ -96,8 +105,8 @@ class SolicitudInformacionsController extends AppController
                           'institucion_id'=>$institucion
                           );
                       $institucionSolicitud = $this->InstitucionRecomendacion->patchEntity($institucionSolicitud, $institucion_solicitud_req);
-                      $res_save_ins_rec=$this->InstitucionSolicitudes->save($institucionSolicitud); 
-                       //$res_save_ins_rec=$this->InstitucionRecomendacion->save($institucionRecomendacion); 
+                      $res_save_ins_rec=$this->InstitucionSolicitudes->save($institucionSolicitud);
+                       //$res_save_ins_rec=$this->InstitucionRecomendacion->save($institucionRecomendacion);
                        //obtener todos los usuarios asociados a la institucion+
                       $query =  $this->Users->find()->matching(
                           'Rols', function ($q) use ($institucion) {
@@ -115,11 +124,11 @@ class SolicitudInformacionsController extends AppController
                               );
                           $solicitudesPendientes = $this->SolicitudesPendientesRespuestas->patchEntity($solicitudesPendientes,  $req_solicitud_respuesta);
                           $this->SolicitudesPendientesRespuestas->save($solicitudesPendientes);
-                         
+
                       }
-                  
+
                   }
-                
+
                 /*$adjuntos_recomendacion = $this->request->data['adjuntos_recomendacion'];
                 foreach ($adjuntos_recomendacion as $adjunto ) {
                     $adjunto_req = [
@@ -133,7 +142,7 @@ class SolicitudInformacionsController extends AppController
                     //$file_name =  ROOT .DS. 'uploads' .DS. time().'_'.$adjunto_req['name'];
                     $file_name_part = time().'_'.$adjunto_req['name'];
                     $file_name =  ROOT .DS. 'webroot'.DS.'uploads'.DS. $file_name_part;
-                    $res=move_uploaded_file($adjunto_req['tmp_name'],$file_name); 
+                    $res=move_uploaded_file($adjunto_req['tmp_name'],$file_name);
                     $adj_save = array(
                         'recomendacion_id'=>$last_id_solicitud,
                         'link'=>$file_name_part);
@@ -141,19 +150,19 @@ class SolicitudInformacionsController extends AppController
                     $adjuntosRecomendacion = $this->AdjuntosRecomendacions->patchEntity($adjuntosRecomendacion, $adj_save);
                     $this->AdjuntosRecomendacions->save($adjuntosRecomendacion);
                 }*/
-                
-                
+
+
                 $this->Flash->success(__('La Solicitud se ha guardado.'));
                 //return $this->redirect(['action' => 'index']);
                 return $this->redirect("/");
             } else {
                 $this->Flash->error(__('La Solicitud no se ha guardado, por favor intente de nuevo.'));
             }
-           
+
         }
         $users = $this->SolicitudInformacions->Users->find('list', ['limit' => 200]);
         $estados = $this->SolicitudInformacions->Estados->find('list', ['limit' => 200]);
-       
+
         $institucions = $this->Institucions->find('list', ['limit' => 200])->toArray();
         $codigo_solicitud=$this->SolicitudInformacions->obtenerUltimoCodigoSolicitud();
         $this->set(compact('solicitud', 'users', 'estados','institucions','codigo_solicitud','gruposInstitucioones','institucionesNew', 'institucionesRol'));

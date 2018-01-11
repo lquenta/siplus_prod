@@ -16,7 +16,16 @@ use Cake\Utility\Text;
  */
 class NoticiasController extends AppController
 {
-     public function beforeFilter(Event $event)
+    public function isAuthorized($user = null) { // debug($user); die();
+        // Administrador puede realizar todas las acciones de este controlador.
+        if ($this->isInRole("Administrador")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function beforeFilter(Event $event)
     {
         // allow only login, forgotpassword
          $this->Auth->allow(['todas','add']);
@@ -70,7 +79,7 @@ class NoticiasController extends AppController
         $noticia = $this->Noticias->newEntity();
         if ($this->request->is('post')) {
              $foto_imagen = $this->request->data['link_imagen'];
-                
+
                     $adjunto_req = [
                 'name' => $foto_imagen['name'],
                 'type' => $foto_imagen['type'],
@@ -82,15 +91,15 @@ class NoticiasController extends AppController
             //$file_name =  ROOT .DS. 'uploads' .DS. time().'_'.$adjunto_req['name'];
             $file_name_part = time().'_'.$adjunto_req['name'];
             $file_name =  ROOT .DS. 'webroot'.DS.'images'.DS. $file_name_part;
-            $res=move_uploaded_file($adjunto_req['tmp_name'],$file_name); 
+            $res=move_uploaded_file($adjunto_req['tmp_name'],$file_name);
             $adj_save = array(
                 'titular'=>$this->request->data['titular'],
                 'contenido'=>$this->request->data['contenido'],
                 'fecha'=>$this->request->data['fecha'],
                 'estado_id'=>$this->request->data['estado_id'],
                 'link_imagen'=>$file_name_part);
-                    
-                
+
+
             $noticia = $this->Noticias->patchEntity($noticia, $adj_save);
             if ($this->Noticias->save($noticia)) {
                 $this->Flash->success(__('Se ha guardado con exito'));
@@ -165,7 +174,7 @@ class NoticiasController extends AppController
          $resultados  = array();
          $resultados_detalle=array();
          $noticias_ultimas_3 = $this->Noticias->find('all',['limit'=>3]);
-        
+
 
          foreach ($noticias_ultimas_3 as $noticia) {
              $nuevo_resultados_detalle=array(

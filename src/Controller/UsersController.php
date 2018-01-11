@@ -12,6 +12,15 @@ use Cake\Event\Event;
 class UsersController extends AppController
 {
 
+    public function isAuthorized($user = null) { // debug($user); die();
+        // Administrador puede realizar todas las acciones de este controlador.
+        if ($this->isInRole("Administrador")) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function beforeFilter(Event $event)
       {
           parent::beforeFilter($event);

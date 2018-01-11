@@ -44,14 +44,10 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             'authError' => 'No esta autorizado para realizar esta acción.',
-            'authenticate' => array(
-               'Form' => array(
-                   'fields' => array('username' => 'nombre_usuario')
-               )
-            ),
-             'authorize' => ['Controller'],
-             'loginAction' => [
-                 'controller' => 'users',
+            'authenticate' => ['Form' => [ 'userModel' => 'Usuarios']],
+            'authorize'    => ['Controller'],
+            'loginAction'  => [
+                 'controller' => 'usuarios',
                  'action' => 'login'
              ],
             'loginRedirect' => [
@@ -59,29 +55,24 @@ class AppController extends Controller
                 'action' => 'index'
             ],
             'logoutRedirect' => [
-                'controller' => 'Users',
+                'controller' => 'usuarios',
                 'action' => 'login'
             ],
             'unauthorizedRedirect' => [
-                'controller' => 'Users',
+                'controller' => 'usuarios',
                 'action' => 'login'
             ]
         ]);
     }
     public function isAuthorized($user)
-{
-    // Admin can access every action
-    //if (isset($user['role']) ) {
-        return true;
-    //}
+    {
+        // Default deny
+        return false;
+    }
 
-    // Default deny
-    return false;
-}
     public function beforeFilter(Event $event)
     {
-        $this->Auth->loginAction = array('controller'=>'users', 'action'=>'login');
-        //$this->Auth->allow(['display']);
+        return;
     }
 
     /**
@@ -117,14 +108,7 @@ class AppController extends Controller
      * @return bool
      */
     function isInRole($role) {
-        return true;
-        /* $userId = $this->request->session()->read('Auth.User.id');
-        $user =  TableRegistry::get('Users')->get($userId); // debug($user); die();
-        $userRole = $user->rol_id == 2 ? 'Administrador' : 'Other';
-
-        if ($userRole == $role) {
-            return true;
-        }
-        return false; */
+        $userRoles = $this->request->session()->read('Auth.User.roles');
+        return in_array($role, $userRoles);
     }
 }
