@@ -74,7 +74,7 @@ $this->start('tb_body_start');
                                 <?=$this->Html->image('avatars/user.jpg', ['class' => 'msg-photo']);?>
                                 <span class="user-info">
                                     <small>Bienvenido,</small>
-                                    <?= $this->request->session()->read('Auth.User.nombre_usuario')?>
+                                    <?= $this->request->session()->read('Auth.User.username')?>
                                 </span>
 
                                 <i class="ace-icon fa fa-caret-down"></i>
@@ -109,15 +109,8 @@ $this->start('tb_body_start');
                             <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administración <span class="caret"></span></a>
                               <ul class="dropdown-menu">
-
                                 <li class="list-group-item">
-                                    <a href="<?= $this->Url->build(["controller" => "rols","action" => "index"]); ?>">
-                                        Roles
-                                    </a>
-                                </li>
-
-                                <li class="list-group-item">
-                                    <a href="<?= $this->Url->build(["controller" => "users","action" => "index"]); ?>">
+                                    <a href="<?= $this->Url->build(["controller" => "Usuarios","action" => "index"]); ?>">
                                         Usuarios
                                     </a>
                                 </li>

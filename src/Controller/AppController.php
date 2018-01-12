@@ -45,7 +45,7 @@ class AppController extends Controller
         $this->loadComponent('Auth', [
             'authError' => 'No esta autorizado para realizar esta acción.',
             'authenticate' => ['Form' => [ 'userModel' => 'Usuarios']],
-            'authorize'    => ['Controller'],
+            // TODO: Descomentar esta línea cuando se necesite implementar y activar la autorización por rol: 'authorize'    => ['Controller'],
             'loginAction'  => [
                  'controller' => 'usuarios',
                  'action' => 'login'

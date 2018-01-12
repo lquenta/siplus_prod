@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 
 /**
  * Usuarios Controller
@@ -13,6 +14,15 @@ use Cake\ORM\TableRegistry;
  */
 class UsuariosController extends AppController
 {
+
+    public function isAuthorized($user = null) { // debug($user); die();
+        // Administrador puede realizar todas las acciones de este controlador.
+        if ($this->isInRole("Administrador")) {
+            return true;
+        }
+
+        return false;
+    }
 
     public function login()
     {
@@ -52,9 +62,9 @@ class UsuariosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Institucions']
+            'contain' => ['Institucions', 'Roles']
         ];
-        $usuarios = $this->paginate($this->Usuarios);
+        $usuarios = $this->paginate($this->Usuarios);  // debug($usuarios); die();
 
         $this->set(compact('usuarios'));
         $this->set('_serialize', ['usuarios']);
@@ -86,16 +96,18 @@ class UsuariosController extends AppController
     {
         $usuario = $this->Usuarios->newEntity();
         if ($this->request->is('post')) {
-            $usuario = $this->Usuarios->patchEntity($usuario, $this->request->getData());
+            $data = $this->request->getData();
+            $data['activo'] = 1;
+            $usuario = $this->Usuarios->patchEntity($usuario, $data); // debug($usuario); die();
             if ($this->Usuarios->save($usuario)) {
-                $this->Flash->success(__('The usuario has been saved.'));
+                $this->Flash->success(__('El usuario se registró correctamente.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
         }
-        $institucions = $this->Usuarios->Institucions->find('list', ['limit' => 200]);
-        $roles = $this->Usuarios->Roles->find('list', ['limit' => 200]);
+        $institucions = $this->Usuarios->Institucions->find('list');
+        $roles = $this->Usuarios->Roles->find('list');
         $this->set(compact('usuario', 'institucions', 'roles'));
         $this->set('_serialize', ['usuario']);
     }
@@ -115,7 +127,7 @@ class UsuariosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $usuario = $this->Usuarios->patchEntity($usuario, $this->request->getData());
             if ($this->Usuarios->save($usuario)) {
-                $this->Flash->success(__('The usuario has been saved.'));
+                $this->Flash->success(__('El usuario se guardó correctamente.'));
 
                 return $this->redirect(['action' => 'index']);
             }

@@ -33,7 +33,7 @@ class RolesTable extends Table
         parent::initialize($config);
 
         $this->setTable('roles');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nombre');
         $this->setPrimaryKey('id');
 
         $this->belongsToMany('Usuarios', [
