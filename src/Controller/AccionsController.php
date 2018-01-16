@@ -247,7 +247,8 @@ class AccionsController extends AppController
         $this->loadModel('ComiteRecomendacions');
         $this->loadModel('Comites');
         
-        
+       
+
 
 
         $gruposInstitucioones = $this->Institucions->find()->where(['AccionSeg_Activo = 1']);
@@ -331,20 +332,22 @@ class AccionsController extends AppController
                 'recomendacion_id'=>$id,
                 'listado' =>' ',
                 );
+
             $accion = $this->Accions->newEntity();
+
             $accion = $this->Accions->patchEntity($accion, $accion_req);
+
             $res_save_accion = $this->Accions->save($accion);
+
             if ($res_save_accion) {
                  $last_id_accion = $res_save_accion->id;
+                 //buscar los ID de cada institucion seleccionada y asignar ala solicitud
+
+
+
                  //autorizadores siempre son 
                  foreach ($request['institucions'] as $institucion_responsable) {
-                        $query =  $this->Users->find()->matching(
-                          'Rols', function ($q) use ($institucion_responsable) {
-                              return $q->where(['Rols.institucion_id' => $institucion_responsable]);
-                          }
-                        );
-
-                        foreach ($query  as $usuario) {
+                       
                             //registramos la solicitud pendiente dwe respuesta
                             $req_accion_solicitud_req=array(
                               'accion_id'=>$last_id_accion,
@@ -353,25 +356,15 @@ class AccionsController extends AppController
                               'respuesta'=>'',
                               'link_adjunto'=>'' ,
                               'estado_id'=>'1',
-                              'user_id'=>$usuario['id'],
+                              'user_id'=>1,
                               'link_adjunto_indicadores'=>''
                               );
                             $accionSolicitud = $this->AccionSolicitud->newEntity();
+
                             $accionSolicitud = $this->AccionSolicitud->patchEntity($accionSolicitud, $req_accion_solicitud_req);
-                            //debug($accionSolicitud);die;
+                            
                             $this->AccionSolicitud->save($accionSolicitud);
                             //aca se registra notificacion de seguimiento para las instituciones
-                            $req_notificacion = array(
-                                'accion_id'=>$last_id_accion,
-                                'usuario_id'=>$usuario['id'],
-                                'mensaje' => 'Debe responder a la solicitud:'.$codigo_accion,
-                                'fecha'=>date('Y-m-d H:i:s'),
-                                'estado'=>'pendiente'
-                                );
-                            $notificacion = $this->Notificacions->newEntity();
-                            $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
-                            $this->Notificacions->save($notificacion);
-                        }
                       
                       
                   }

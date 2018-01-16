@@ -133,37 +133,22 @@ class AccionSolicitudController extends AppController
                         $res_save=$this->IndicadoresAccionSolicitud->save($indicador_solicitud);
                     }*/
 
-                    $institucion_responsable=26;
-                    $query =  $this->Users->find()->matching(
-                      'Rols', function ($q) use ($institucion_responsable) {
-                          return $q->where(['Rols.institucion_id' => $institucion_responsable]);
-                      }
-                    );
-                    foreach ($query  as $usuario) {
-                        //registramos autorizacion de accion para min. justicia
-                         $autorizacion = $this->Autorizacions->newEntity();
-                          $req_autorizacion = array(
-                              'usuario_id'=>$usuario['id'],
-                              'accion_id'=>$accionSolicitud->accion_id,
-                              'estado_id'=>1,
-                              'fecha_modificacion'=>date('Y-m-d H:i:s'),
-                              'visto_bueno_fisico'=>'0'
-                              );
-                          $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
-                          //debug($autorizacion);die;
-                          $this->Autorizacions->save($autorizacion);
-                        //aca se registra notificacion de seguimiento para las instituciones
-                        $req_notificacion = array(
-                            'accion_id'=>$accionSolicitud->accion_id,
-                            'usuario_id'=>$usuario['id'],
-                            'mensaje' => 'Solicitudes respondidas, favor revisar accion:'.$accionSolicitud->accion->codigo,
-                            'fecha'=>date('Y-m-d H:i:s'),
-                            'estado'=>'pendiente'
-                            );
-                        $notificacion = $this->Notificacions->newEntity();
-                        $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
-                        $this->Notificacions->save($notificacion);
-                    }
+                    //nuevo esquema, se inicia por rol
+                     $accion->estado_id='3';
+                      $accion->fecha=date('Y-m-d H:i:s');
+                      $res_save_accion = $this->Accions->save($accion);
+                       $autorizacion = $this->Autorizacions->newEntity();
+                         $req_autorizacion = array(
+                             'roles_id'=>3,
+                             'accion_id'=>$accionSolicitud->accion_id,
+                             'estado_id'=>1,
+                             'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                             'visto_bueno_fisico'=>0
+                             );
+                         $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                         $this->Autorizacions->save($autorizacion);
+                         
+
                     //marcar la accion como respondida por todos
                      $accion=$this->Accions->get($accionSolicitud->accion_id);
                        $accion->estado_id=10;
@@ -189,12 +174,14 @@ class AccionSolicitudController extends AppController
     public function index()
     {
         $this->loadModel('SolicitudesPendientesRespuestas');
+        $this->loadModel('Usuarios');
         $this->paginate = [
             'contain' => ['Accions', 'Institucions', 'Estados', 'Users']
         ];
+        $usuario_actual=$this->Usuarios->get($this->Auth->user('id'));
         $accionSolicitud = $this->AccionSolicitud->find('all',[
             'contain' => ['Accions', 'Institucions', 'Estados', 'Users']
-        ])->where(['AccionSolicitud.estado_id'=>'1','user_id'=>$this->Auth->user('id')]);
+        ])->where(['AccionSolicitud.estado_id'=>'1','institucion_id'=>$usuario_actual->institucion_id]);
         $accionSolicitud = $this->paginate($accionSolicitud);
 
         //debug($accionSolicitud);

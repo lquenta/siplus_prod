@@ -141,7 +141,7 @@ class AutorizacionsController extends AppController
         $this->loadModel('Indicadors');
         $this->loadModel('ComiteRecomendacions');
         $this->loadModel('Comites');
-        $this->loadModel('Rols');
+        $this->loadModel('Roles');
         $this->loadModel('ConsolidadoIndicadores');
 
 
@@ -364,147 +364,68 @@ class AutorizacionsController extends AppController
                   }
                   $flag_guardado=true;
                   /*fin logica de guardado*/
-                  $autorizacion_actual->fecha_modificacion=date('Y-m-d H:i:s');
-                  $autorizacion_actual->visto_bueno_fisico='0';
-                  $autorizacion_actual->estado_id='3';
+                  
 
                   foreach ($accion_solicitudes as $solicitud ) {
                      $solicitud->estado_id='3';
                      $solicitud->observacion='aprobado';
                      $this->AccionSolicitud->save($solicitud);
                    }
-                   //registrar autorizacion para recomendacion  Min Justicia -> 26 , Procuradoria -> 27 , -> Cancilleria -> 28
-                   //si el estado es 10 entonces estamos en la aprobacion 1ra q es del min de justicia y debemos marcarlo y enviarlo para el 2do ejecutor que es procuradoria
+
+                   //aca se cambia el esquema, ya no es por institucion sino por rol
                    if($accion->estado_id==10 || $accion->estado_id==6){
-                        $accion->estado_id='3';
-                        $accion->fecha=date('Y-m-d H:i:s');
-                        $res_save_accion = $this->Accions->save($accion);
-                        //buscamos los autorizadores de la procuradoria 
-                        $autorizadores_procuradoria=$this->Users->find()->matching(
-                            'Rols', function ($q) {
-                                return $q->where(['Rols.institucion_id' => '27']);
-                            }
-                        );
-                        foreach ($autorizadores_procuradoria as $autorizador ) {
-                          //registrar autorizacion para recomendacion  Min Justicia -> 1 , Procuradoria -> 3 , -> Cancilleria -> 4
-                          //aca una vez que el min de justicia acepte se envia a procuradoria para su atorizacion
-                          $autorizacion = $this->Autorizacions->newEntity();
-                            $req_autorizacion = array(
-                                'usuario_id'=>$autorizador['id'],
-                                'accion_id'=>$id,
-                                'estado_id'=>1,
-                                'fecha_modificacion'=>date('Y-m-d H:i:s'),
-                                'visto_bueno_fisico'=>0
-                                );
-                            $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
-                            $this->Autorizacions->save($autorizacion);
-                             $req_notificacion = array(
-                                'accion_id'=>$id,
-                                'usuario_id'=>$autorizador['id'],
-                                'mensaje' => 'debe autorizar la accion con codigo:'.$accion->codigo,
-                                'fecha'=>date('Y-m-d H:i:s'),
-                                'estado'=>'pendiente'
-                                );
-                            $notificacion = $this->Notificacions->newEntity();
-                            $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
-                            $this->Notificacions->save($notificacion);
-                            
-                            
-                        }
-                        
-                   }elseif($accion->estado_id==3|| $accion->estado_id==8){
-                    //se el estado es 5 quiere decir que la procuradoria ya acepto y debemos enviar a la ultima instancia, a cancilleria
-                        $accion->estado_id='5';
-                        $accion->fecha=date('Y-m-d H:i:s');
-                        $res_save_accion = $this->Accions->save($accion);
-                        //buscamos los autorizadores de la procuradoria 
-                        $autorizadores_cancilleria=$this->Users->find()->matching(
-                            'Rols', function ($q)  {
-                                return $q->where(['Rols.institucion_id' => '28']);
-                            }
-                        );
-                        foreach ($autorizadores_cancilleria as $autorizador ) {
-                          //registrar autorizacion para recomendacion  Min Justicia -> 1 , Procuradoria -> 3 , -> Cancilleria -> 4
-                          //aca una vez que el min de justicia acepte se envia a procuradoria para su atorizacion
-                          $autorizacion = $this->Autorizacions->newEntity();
-                            $req_autorizacion = array(
-                                'usuario_id'=>$autorizador['id'],
-                                'accion_id'=>$id,
-                                'estado_id'=>1,
-                                'fecha_modificacion'=>date('Y-m-d H:i:s'),
-                                'visto_bueno_fisico'=>0
-                                );
-                            $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
-                            $this->Autorizacions->save($autorizacion);
-                             $req_notificacion = array(
-                                'accion_id'=>$id,
-                                'usuario_id'=>$autorizador['id'],
-                                'mensaje' =>'debe autorizar la accion con codigo:'.$accion->codigo,
-                                'fecha'=>date('Y-m-d H:i:s'),
-                                'estado'=>'pendiente'
-                                );
-                            $notificacion = $this->Notificacions->newEntity();
-                            $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
-                            $this->Notificacions->save($notificacion);
-                        }
-                   }elseif($accion->estado_id==5){
-                    //se el estado es 5 quiere decir que la cancilleria ya acepto y debemos marcar la recomendacion como aceptada
-                       $accion->estado_id='11';
-                        $accion->fecha=date('Y-m-d H:i:s');
-                        $res_save_accion = $this->Accions->save($accion);
-                        $autorizadores_cancilleria=$this->Users->find()->matching(
-                            'Rols', function ($q)  {
-                                return $q->where(['Rols.institucion_id' => '26']);
-                            }
-                        );
-                        foreach ($autorizadores_cancilleria as $autorizador ) {
-                          //registrar autorizacion para recomendacion  Min Justicia -> 1 , Procuradoria -> 3 , -> Cancilleria -> 4
-                          //aca una vez que el min de justicia acepte se envia a procuradoria para su atorizacion
-                          $autorizacion = $this->Autorizacions->newEntity();
-                            $req_autorizacion = array(
-                                'usuario_id'=>$autorizador['id'],
-                                'accion_id'=>$id,
-                                'estado_id'=>1,
-                                'fecha_modificacion'=>date('Y-m-d H:i:s'),
-                                'visto_bueno_fisico'=>0
-                                );
-                            $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
-                            $this->Autorizacions->save($autorizacion);
-                             $req_notificacion = array(
-                                'accion_id'=>$id,
-                                'usuario_id'=>$autorizador['id'],
-                                'mensaje' =>'debe autorizar la publicacion del seguimiento con codigo:'.$accion->codigo,
-                                'fecha'=>date('Y-m-d H:i:s'),
-                                'estado'=>'pendiente'
-                                );
-                            $notificacion = $this->Notificacions->newEntity();
-                            $notificacion = $this->Notificacions->patchEntity($notificacion, $req_notificacion);
-                            $this->Notificacions->save($notificacion);
-                        }
-                        
+                      $accion->estado_id='3';
+                      $accion->fecha=date('Y-m-d H:i:s');
+                      $res_save_accion = $this->Accions->save($accion);
+                       $autorizacion = $this->Autorizacions->newEntity();
+                         $req_autorizacion = array(
+                             'roles_id'=>4,
+                             'accion_id'=>$id,
+                             'estado_id'=>1,
+                             'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                             'visto_bueno_fisico'=>0
+                             );
+                         $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                         $this->Autorizacions->save($autorizacion);
+                         
                    }
+                    elseif($accion->estado_id==3|| $accion->estado_id==8){
+                      $accion->estado_id='5';
+                      $accion->fecha=date('Y-m-d H:i:s');
+                      $res_save_accion = $this->Accions->save($accion);
+                      $autorizacion = $this->Autorizacions->newEntity();
+                      $req_autorizacion = array(
+                          'roles_id'=>5,
+                          'accion_id'=>$id,
+                          'estado_id'=>1,
+                          'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                          'visto_bueno_fisico'=>0
+                          );
+                      $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                      $this->Autorizacions->save($autorizacion);
+                    }
+                    elseif($accion->estado_id==5){
+                      $accion->estado_id='11';
+                      $accion->fecha=date('Y-m-d H:i:s');
+                      $res_save_accion = $this->Accions->save($accion);
+                      $autorizacion = $this->Autorizacions->newEntity();
+                      $req_autorizacion = array(
+                          'roles_id'=>3,
+                          'accion_id'=>$id,
+                          'estado_id'=>1,
+                          'fecha_modificacion'=>date('Y-m-d H:i:s'),
+                          'visto_bueno_fisico'=>0
+                          );
+                      $autorizacion = $this->Autorizacions->patchEntity($autorizacion,  $req_autorizacion);
+                      if($this->Autorizacions->save($autorizacion)){
+                        $this->Flash->success(__('Accion actualizada correctamente.'));
+                       return $this->redirect(['action' => 'index']);
+                      }else{
+                        $this->Flash->error(__('Error en la autorizacion por favor intente de nuevo.'));
+                      }
+
+                    }
                   
-                  /*Grabacion de la autorizacion*/
-                  if ($this->Autorizacions->save($autorizacion_actual)) {
-                //     if(true){
-                     $todas_autorizaciones_pendientes = $this->Autorizacions->find('all')->where(['accion_id'=>$id,'estado_id'=>'1','id !='=>$autorizacion_actual->id]);
-                     //debug($todas_autorizaciones_pendientes->all());die;
-                     foreach ($todas_autorizaciones_pendientes as $aut_pendiente ) {
-                       $aut_pendiente->fecha_modificacion=date('Y-m-d H:i:s');
-                       $aut_pendiente->estado_id=$autorizacion_actual->estado_id;
-                       //$this->Autorizacions->save($aut_pendiente);
-                     }
-                     $this->Flash->success(__('Accion actualizada correctamente.'));
-                     return $this->redirect(['action' => 'index']);
-                 } else {
-                     $this->Flash->error(__('Error en la autorizacion por favor intente de nuevo.'));
-                 }
-                  $autorizacion_actual->fecha_modificacion=date('Y-m-d H:i:s');
-                    $autorizacion_actual->visto_bueno_fisico='0';
-                    $autorizacion_actual->estado_id='4';
-                  $consolidado_datos = $this->Consolidados->find('all',['contain' => ['AdjuntosConsolidados']])
-                 ->where(['accion_id'=>$id])->first();
-               
                   /*fin de la grabacion de autorizacion*/
 
                 } else if (isset($this->request->data['btnRechazar'])) 
@@ -522,6 +443,7 @@ class AutorizacionsController extends AppController
                           $solicitud->observacion=$this->request->data['razon'];
                           $this->AccionSolicitud->save($solicitud);
                         }
+                        
                        foreach ($institucionsAccion as $institucion_responsable) {
                               $query =  $this->Users->find()->matching(
                                 'Rols', function ($q) use ($institucion_responsable) {
