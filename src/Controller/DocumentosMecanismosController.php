@@ -18,6 +18,15 @@ use Cake\Utility\Text;
 class DocumentosMecanismosController extends AppController
 {
 
+    public function isAuthorized($user = null) { // debug($user); die();
+        // Administrador puede realizar todas las acciones de este controlador.
+        if ($this->isInRole("Administrador")) {
+            return true;
+        }
+
+        return false;
+    }
+
       public function beforeFilter(Event $event)
     {
         // allow only login, forgotpassword
@@ -72,7 +81,7 @@ class DocumentosMecanismosController extends AppController
         $documentosMecanismo = $this->DocumentosMecanismos->newEntity();
         if ($this->request->is('post')) {
              $documento_pdf = $this->request->data['link'];
-                
+
                     $adjunto_req = [
                 'name' => $documento_pdf['name'],
                 'type' => $documento_pdf['type'],
@@ -82,7 +91,7 @@ class DocumentosMecanismosController extends AppController
              $adjunto_req['name']=$this->sanitize($adjunto_req['name']);
             $file_name_part = time().'_'.$adjunto_req['name'];
             $file_name =  ROOT .DS. 'webroot'.DS.'uploads'.DS. $file_name_part;
-            $res=move_uploaded_file($adjunto_req['tmp_name'],$file_name); 
+            $res=move_uploaded_file($adjunto_req['tmp_name'],$file_name);
             $adj_save = array(
                 'mecanismo_id'=>$this->request->data['mecanismo_id'],
                 'link'=>$file_name_part,
@@ -165,7 +174,7 @@ class DocumentosMecanismosController extends AppController
          $resultados  = array();
          $resultados_detalle=array();
          $mecanismos_lista = $this->Mecanismos->find('all');
-        
+
 
          foreach ($mecanismos_lista as $mecanismo_elemento) {
             $informes_recomendaciones_finales_elemento = $this->DocumentosMecanismos->find('all')->where(['mecanismo_id'=>$mecanismo_elemento->id])->where(['tipoInforme_id'=>1]);
@@ -186,7 +195,7 @@ class DocumentosMecanismosController extends AppController
                 );
                 array_push($resultados_detalle, $nuevo_resultados_detalle);
             }
-            
+
 
          }
          $resultados=array(
@@ -198,7 +207,7 @@ class DocumentosMecanismosController extends AppController
             '_serialize' => ['resultados']
         ]);
 
-        
+
     }
 
 }

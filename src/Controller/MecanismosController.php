@@ -11,8 +11,8 @@ use App\Controller\AppController;
 class MecanismosController extends AppController
 {
     public function isAuthorized($user = null) { // debug($user); die();
-        // Admin allowed anywhere
-        if (isset($user['rol_id']) && $user['rol_id'] === 2) { //admin
+        // Administrador puede realizar todas las acciones de este controlador.
+        if ($this->isInRole("Administrador")) {
             return true;
         }
 

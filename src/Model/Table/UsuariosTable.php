@@ -42,6 +42,7 @@ class UsuariosTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Timestamp');
         $this->setTable('usuarios');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
@@ -97,9 +98,9 @@ class UsuariosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('usuario')
-            ->requirePresence('usuario', 'create')
-            ->notEmpty('usuario');
+            ->scalar('username')
+            ->requirePresence('username', 'create')
+            ->notEmpty('username');
 
         $validator
             ->scalar('password')
@@ -122,24 +123,9 @@ class UsuariosTable extends Table
             ->notEmpty('cargo');
 
         $validator
-            ->dateTime('fecha_creacion')
-            ->requirePresence('fecha_creacion', 'create')
-            ->notEmpty('fecha_creacion');
-
-        $validator
-            ->dateTime('fecha_modificacion')
-            ->requirePresence('fecha_modificacion', 'create')
-            ->notEmpty('fecha_modificacion');
-
-        $validator
             ->email('email')
             ->requirePresence('email', 'create')
             ->notEmpty('email');
-
-        $validator
-            ->integer('activo')
-            ->requirePresence('activo', 'create')
-            ->notEmpty('activo');
 
         return $validator;
     }

@@ -11,37 +11,22 @@ use Cake\I18n\Time;
 class RecomendacionsController extends AppController
 {
 
-    public function isAuthorized($user = null) { // debug($user); die();
-
-            // Admin allowed anywhere
-            if (isset($user['rol_id']) && $user['rol_id'] === 2) { //admin
-                $allowedActions = ['index'];
-                if(in_array($this->request->action, $allowedActions)) {
-                    return true;
-                }
+    public function isAuthorized($user = null) {
+        // Administrador y Creador de Usuarios solo puede ingresar a la pantalla de inicio.
+        if ($this->isInRole("Administrador") || $this->isInRole("CreadorUsuarios")) {
+            $allowedActions = ['index'];
+            if(in_array($this->request->action, $allowedActions)) {
+                return true;
             }
-
-            //Iniciador (registrador)
-            if (isset($user['rol_id']) && $user['rol_id'] === 1) {
-
-                $allowedActions = ['add', 'index', 'view'];
-                if(in_array($this->request->action, $allowedActions)) {
-                    return true;
-                }
-
-            }
-
-            // 'user' allowed in specific actions
-            if (isset($user['rol_id']) && $user['rol_id'] != 2) {
-
-                $allowedActions = ['index', 'view'];
-                if(in_array($this->request->action, $allowedActions)) {
-                    return true;
-                }
-
-            }
-            return false;
         }
+
+        // Registrador puede realizar todas las acciones de este controlador.
+        if ($this->isInRole("Registrador")) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Index method
