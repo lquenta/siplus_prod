@@ -83,22 +83,22 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                             </div>
                                         </div>
 
-                                        
+
 
                                         <div class="space-6"></div>
 
-                                           
+
 
                                     <div class="vspace-12-sm"></div>
 
-                                   
+
                                 </div>
 
-                                    
+
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="widget-box transparent" id="recent-box">
-                                           
+
 
                                             <div class="widget-body">
                                                 <div class="widget-main padding-4">
@@ -116,14 +116,14 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                             <li role="presentation"><a href="#Consolidado" aria-controls="Consolidado" role="tab" data-toggle="tab">Consolidado</a></li>
 
                                                             <li role="presentation"><a href="#DatosEstadisticos" aria-controls="DatosEstadisticos" role="tab" data-toggle="tab">Datos Estadísticos</a></li>
-                                                             <li role="presentation"><a href="#SeguimientosPublicados" aria-controls="SeguimientosPublicados" role="tab" data-toggle="tab">Seguimientos Publicados</a></li>                                                         
-                                                            
+                                                             <li role="presentation"><a href="#SeguimientosPublicados" aria-controls="SeguimientosPublicados" role="tab" data-toggle="tab">Seguimientos Publicados</a></li>
+
                                                           </ul>
 
                                                           <!-- Tab panes -->
                                                           <div class="tab-content">
                                                             <div role="tabpanel" class="tab-pane active" id="NuevaRecomendaciones">
-                                                                
+
                                                                 <h2>Nuevas Recomendaciones</h2>
 
                                                                  <table class="table table-striped" cellpadding="0" cellspacing="0">
@@ -147,7 +147,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                             <td><?= h($recomendacion['estado']) ?></td>
                                                                             <td class="actions">
                                                                                  <?= $this->Html->link('', ['controller' => 'recomendacions','action' => 'edit', $recomendacion['id']], ['title' => __('Editar'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                                                                               
+
 
                                                                             </td>
                                                                          </tr>
@@ -155,7 +155,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                     </tbody>
                                                                 </table>
 
-                                                                
+
                                                             </div>
                                                              <div role="tabpanel" class="tab-pane" id="NuevaAS">
 
@@ -185,12 +185,12 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                         <?php endforeach; ?>
                                                                     </tbody>
                                                                 </table>
-                                                                                                                    
-                                                                
+
+
                                                             </div>
                                                             <div role="tabpanel" class="tab-pane" id="NSI">
                                                                 <h2>Nuevas Solicitudes de Información</h2>
-                                                                
+
                                                                  <table class="table table-striped" cellpadding="0" cellspacing="0">
                                                                     <thead>
                                                                         <tr>
@@ -213,12 +213,12 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                         <?php endforeach; ?>
                                                                     </tbody>
                                                                 </table>
-                                                                               
-                                                                
-                                                            </div>                                                           
+
+
+                                                            </div>
 
                                                             <div role="tabpanel" class="tab-pane" id="Consolidado">
-                                                                <?php if($solicitudInformacions->count()>0 && false){ ?>
+                                                                <?php if($solicitudInformacions != null && $solicitudInformacions->count()>0 && false){ ?>
                                                                 <h2>Pendientes de responder, solicitud de informacion</h2>
                                                                 <table class="table table-striped" cellpadding="0" cellspacing="0">
                                                                     <thead>
@@ -241,10 +241,10 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                             <td>
                                                                                 <?= $solicitudInformacion->has('user') ? $this->Html->link($solicitudInformacion->user->nombre_usuario, ['controller' => 'Users', 'action' => 'view', $solicitudInformacion->user->id]) : '' ?>
                                                                             </td>
-                                                                            
+
                                                                             <td class="actions">
                                                                                 <?= $this->Html->link('', ['action' => 'view', $solicitudInformacion->id], ['title' => __('Ver Detalle'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                                                                                
+
                                                                                 <?= $this->Html->link('', ['controller'=>'SolicitudRespuestas', 'action' => 'add', $solicitudInformacion->id], ['title' => __('Responder Solicitud'), 'class' => 'btn btn-default glyphicon glyphicon-ok']) ?>
                                                                             </td>
                                                                         </tr>
@@ -253,7 +253,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                 </table>
                                                                 <?php } ?>
 
-                                                                <?php if($autorizacions->count()>0){ ?>
+                                                                <?php if($autorizacions != null && $autorizacions->count()>0){ ?>
                                                                 <h2>Pendientes de autorizacion</h2>
                                                                 <table class="table table-striped" cellpadding="0" cellspacing="0">
                                                                     <thead>
@@ -287,7 +287,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                     </tbody>
                                                                 </table>
                                                                 <?php } ?>
-                                                                <?php if($accionSolicitud->count()>0){?>
+                                                                <?php if($accionSolicitud != null && $accionSolicitud->count()>0){?>
                                                                     <h2>Pendientes de respuesta</h2>
                                                                     <table class="table table-striped" cellpadding="0" cellspacing="0">
                                                                         <thead>
@@ -305,9 +305,9 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                                 <td>
                                                                                     <?= $accion_sol->has('accion') ? $this->Html->link($accion_sol->accion->descripcion, ['controller' => 'Accions', 'action' => 'view', $accion_sol->accion->id]) : '' ?>
                                                                                 </td>
-                                                                               
+
                                                                                 <td><?= h($accion_sol->fecha) ?></td>
-                                                                               
+
                                                                                 <td class="actions">
                                                                                     <?= $this->Html->link('', ['controller' => 'AccionSolicitud','action' => 'responderSolicitud', $accion_sol->id], ['title' => __('Responder'), 'class' => 'btn btn-default glyphicon glyphicon-ok']) ?>
                                                                                 </td>
@@ -315,7 +315,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                             <?php endforeach; ?>
                                                                         </tbody>
                                                                     </table>
-                                                               
+
                                                                 <?php } ?>
 
                                                                 <h2>Solicitudes sin Respuesta</h2>
@@ -335,9 +335,9 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                             <td><?= h($accion_sin_resp_min->codigo) ?></td>
                                                                             <td><?= h($accion_sin_resp_min->descripcion) ?></td>
                                                                             <td><?= h($accion_sin_resp_min->fecha) ?></td>
-                                                                            
+
                                                                             <td class="actions">
-                                                                                <?= $this->Html->link('', ['controller'=>'Accions','action' => 'view', $accion_sin_resp_min->id], ['title' => __('Ver'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>               
+                                                                                <?= $this->Html->link('', ['controller'=>'Accions','action' => 'view', $accion_sin_resp_min->id], ['title' => __('Ver'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
                                                                             </td>
                                                                         </tr>
                                                                         <?php endforeach; ?>
@@ -347,33 +347,33 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
 
                                                             </div>
                                                             <div role="tabpanel" class="tab-pane" id="DatosEstadisticos">
-                                                                
-                                                                
+
+
                                                                 <div class="row panel panel-default">
                                                                     <div class = "panel-heading">
                                                                       <h4> Distribución de Recomendaciones</h4 >
-                                                                   </div>                                                               
+                                                                   </div>
                                                                    <div id="CharRecomendaciones" class="row panel-body"></div>
                                                                 </div>
 
                                                                 <div class="row panel panel-default">
                                                                     <div class = "panel-heading">
                                                                       <h4> Distribución de las Acciones de Seguimiento</h4 >
-                                                                     </div>                                                               
+                                                                     </div>
                                                                    <div id="CharAcciones" class="row panel-body"></div>
                                                                 </div>
-                                                               
+
                                                                    <div class="row panel panel-default">
                                                                     <div class = "panel-heading">
                                                                       <h4> Cumplimiento de Solicitudes</h4 >
-                                                                   </div>                                                               
-                                                                   <div id="CharSolicitudes" class="row panel-body">
-                                                                       
                                                                    </div>
-                                                                    </div>  
+                                                                   <div id="CharSolicitudes" class="row panel-body">
+
+                                                                   </div>
+                                                                    </div>
                                                             </div>
                                                           <div role="tabpanel" class="tab-pane" id="SeguimientosPublicados">
-                                                                
+
                                                                 <h2>Seguimientos pendientes de Aprobacion para su publicacion</h2>
 
                                                                  <table class="table table-striped" cellpadding="0" cellspacing="0">
@@ -391,15 +391,15 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                                                             <td><?= h($seguimiento_pendientes_publicacion->accion->codigo) ?></td>
                                                                             <td><?= h($seguimiento_pendientes_publicacion->accion->descripcion) ?></td>
                                                                             <td><?= h($seguimiento_pendientes_publicacion->accion->fecha) ?></td>
-                                                                            
+
                                                                             <td class="actions">
-                                                                                <?= $this->Html->link('', ['controller'=>'Accions','action' => 'view', $seguimiento_pendientes_publicacion->accion->id], ['title' => __('Ver'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>               
+                                                                                <?= $this->Html->link('', ['controller'=>'Accions','action' => 'view', $seguimiento_pendientes_publicacion->accion->id], ['title' => __('Ver'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
                                                                             </td>
                                                                         </tr>
                                                                         <?php endforeach; ?>
                                                                     </tbody>
                                                                 </table>
-                                                                  
+
                                                             </div>
                                                           </div>
 
@@ -410,7 +410,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                         </div><!-- /.widget-box -->
                                     </div><!-- /.col -->
 
-                                   
+
                                 </div><!-- /.row -->
  <script type="text/javascript">
             jQuery(function($) {
@@ -429,7 +429,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                         size: size
                     });
                 })*/
-            
+
                 $('.sparkline').each(function(){
                     var $box = $(this).closest('.infobox');
                     var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
@@ -441,12 +441,12 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                                         chartRangeMin:$(this).data('min') || 0
                                      });
                 });
-            
-            
+
+
               //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
               //but sometimes it brings up errors with normal resize event handlers
               $.resize.throttleWindow = false;
-            
+
               var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
               var data = [
                 { label: "social networks",  data: 38.7, color: "#68BC31"},
@@ -473,7 +473,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                     },
                     legend: {
                         show: true,
-                        position: position || "ne", 
+                        position: position || "ne",
                         labelBoxBorderColor: null,
                         margin:[-30,15]
                     }
@@ -485,16 +485,16 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                  })
              }
              //drawPieChart(placeholder, data);
-            
-             
+
+
              placeholder.data('chart', data);
              placeholder.data('draw', drawPieChart);
-            
-            
+
+
               //pie chart tooltip example
               var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
               var previousPoint = null;
-            
+
               placeholder.on('plothover', function (event, pos, item) {
                 if(item) {
                     if (previousPoint != item.seriesIndex) {
@@ -507,33 +507,33 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                     $tooltip.hide();
                     previousPoint = null;
                 }
-                
+
              });
-            
+
                 /////////////////////////////////////
                 $(document).one('ajaxloadstart.page', function(e) {
                     $tooltip.remove();
                 });
-            
-            
-            
-            
+
+
+
+
                 var d1 = [];
                 for (var i = 0; i < Math.PI * 2; i += 0.5) {
                     d1.push([i, Math.sin(i)]);
                 }
-            
+
                 var d2 = [];
                 for (var i = 0; i < Math.PI * 2; i += 0.5) {
                     d2.push([i, Math.cos(i)]);
                 }
-            
+
                 var d3 = [];
                 for (var i = 0; i < Math.PI * 2; i += 0.2) {
                     d3.push([i, Math.tan(i)]);
                 }
-                
-            
+
+
                 /*var sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
                 $.plot("#sales-charts", [
                     { label: "Domains", data: d1 },
@@ -561,28 +561,28 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                         borderColor:'#555'
                     }
                 });*/
-            
-            
+
+
                 $('#recent-box [data-rel="tooltip"]').tooltip({placement: tooltip_placement});
                 function tooltip_placement(context, source) {
                     var $source = $(source);
                     var $parent = $source.closest('.tab-content')
                     var off1 = $parent.offset();
                     var w1 = $parent.width();
-            
+
                     var off2 = $source.offset();
                     //var w2 = $source.width();
-            
+
                     if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
                     return 'left';
                 }
-            
-            
+
+
                 $('.dialogs,.comments').ace_scroll({
                     size: 300
                 });
-                
-                
+
+
                 //Android's default browser somehow is confused when tapping on label which will lead to dragging the task
                 //so disable dragging when clicking on label
                 var agent = navigator.userAgent.toLowerCase();
@@ -594,7 +594,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                     if(label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation() ;
                   });
                 }
-            
+
                 $('#tasks').sortable({
                     opacity:0.8,
                     revert:true,
@@ -613,18 +613,18 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                     if(this.checked) $(this).closest('li').addClass('selected');
                     else $(this).closest('li').removeClass('selected');
                 });
-            
-            
+
+
                 //show the dropdowns on top or bottom depending on window height and menu position
                 $('#task-tab .dropdown-hover').on('mouseenter', function(e) {
                     var offset = $(this).offset();
-            
+
                     var $w = $(window)
-                    if (offset.top > $w.scrollTop() + $w.innerHeight() - 100) 
+                    if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
                         $(this).addClass('dropup');
                     else $(this).removeClass('dropup');
                 });
-            
+
             })
         </script>
         <script type="text/javascript">
@@ -637,7 +637,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
 
            for(var item in listRecomendacionsPie) {
                 obj = {
-                        name: listRecomendacionsPie[item]["descripcion"], 
+                        name: listRecomendacionsPie[item]["descripcion"],
                         y: parseFloat(listRecomendacionsPie[item]["porcentaje"])
                       };
                 dataRecomendaciones.push(obj);
@@ -645,12 +645,12 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
 
             for(var item in listAccionesSegPie) {
                 obj = {
-                        name: listAccionesSegPie[item]["descripcion"], 
+                        name: listAccionesSegPie[item]["descripcion"],
                         y: parseFloat(listAccionesSegPie[item]["porcentaje"])
                       };
                 dataAccionesSeguimiento.push(obj);
             }
-            
+
            $(function () {
             $('#CharRecomendaciones').highcharts({
                 chart: {
@@ -685,7 +685,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
                 }]
             });
 
-          
+
         });
 
               $(function () {
@@ -726,7 +726,7 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
         </script>
 
          <script type="text/javascript">
-            
+
             var listSolictudTacomentro = <?php echo json_encode($listSolictudTacomentro) ?>;
 
     $(function () {
@@ -820,27 +820,27 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
     jQuery(function(){
 
     var minimized_elements = $('p.minimize');
-    
-    minimized_elements.each(function(){    
-        var t = $(this).text();        
+
+    minimized_elements.each(function(){
+        var t = $(this).text();
         if(t.length < 100) return;
-        
+
         $(this).html(
             t.slice(0,100)+'<span>... </span><a href="#" class="more">Mas</a>'+
             '<span style="display:none;">'+ t.slice(100,t.length)+' <a href="#" class="less">Menos</a></span>'
         );
-        
-    }); 
-    
+
+    });
+
     $('a.more', minimized_elements).click(function(event){
         event.preventDefault();
         $(this).hide().prev().hide();
-        $(this).next().show();        
+        $(this).next().show();
     });
-    
+
     $('a.less', minimized_elements).click(function(event){
         event.preventDefault();
-        $(this).parent().hide().prev().show().prev().show();    
+        $(this).parent().hide().prev().show().prev().show();
     });
 
 });

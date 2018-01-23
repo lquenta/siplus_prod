@@ -202,7 +202,7 @@ $this->start('tb_body_start');
                         </a>
                     </li>
                      <li class="">
-                        <a href="<?= $this->Url->build(["controller" => "Pages","action" => "display","home"]); ?>">
+                        <a href="<?= $this->Url->build(["controller" => "Pages", "action" => "home"]); ?>">
 
                             <span> Panel de Control</span>
                         </a>
@@ -232,7 +232,7 @@ $this->start('tb_body_start');
                         <ul class="breadcrumb">
                             <li>
                                 <i class="ace-icon fa fa-home home-icon"></i>
-                                <a href="<?= $this->Url->build(["controller" => "Pages","action" => "display","home"]); ?>">Inicio</a>
+                                <a href="<?= $this->Url->build(["controller" => "Pages","action" => "home"]); ?>">Inicio</a>
                             </li>
                             <li class="active"><?=$this->fetch('title'); ?></li>
                         </ul><!-- /.breadcrumb -->
